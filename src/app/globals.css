@@ -1,7 +1,7 @@
 @font-face {
-  font-family: "Fredoka One";
-  src: url("/fonts/FredokaOne-Regular.ttf") format("truetype");
-  font-weight: normal;
+  font-family: "Fredoka";
+  src: url("/fonts/Fredoka-VariableFont_wdth,wght.ttf");
+  font-weight: 300 700;
   font-style: normal;
   font-display: swap;
 }
@@ -31,7 +31,7 @@
   --green-capiba: #3f7d58;
   --yellow-capiba: #ef9651;
   --text-color: #524e4e;
-  --title-font: "Fredoka One", "Inter", Arial, Helvetica, sans-serif;
+  --title-font: "Fredoka", "Inter", Arial, Helvetica, sans-serif;
   --body-font: "Inter", Arial, Helvetica, sans-serif;
   --page-max-width: 1280px;
 }
@@ -64,10 +64,4 @@ a {
 h1,
 h2 {
   font-family: var(--title-font);
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }

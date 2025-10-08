@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import Button from "@/components/ui/Button";
+import AdoptionDonationSections from "@/components/AdoptionDonationSections";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -20,15 +22,17 @@ export default function Home() {
             com sua história única, aguardam pacientemente por alguém especial.
             Será você a pessoa que eles tanto esperam?
           </p>
-          <Button
-            variant="primary"
-            color="yellow"
-            size="large"
-            icon={<ArrowRight size={20} />}
-            iconPosition="right"
-          >
-            Saiba Mais
-          </Button>
+          <Link href="/adotar">
+            <Button
+              variant="primary"
+              color="yellow"
+              size="large"
+              icon={<ArrowRight size={20} />}
+              iconPosition="right"
+            >
+              Saiba Mais
+            </Button>
+          </Link>
         </div>
         <div className={styles.heroImage}>
           <Image
@@ -40,6 +44,7 @@ export default function Home() {
           />
         </div>
       </section>
+      <AdoptionDonationSections />
     </div>
   );
 }
