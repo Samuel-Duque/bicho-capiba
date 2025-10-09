@@ -6,13 +6,6 @@ export default function AdoptionDonationSections() {
   return (
     <div className={styles.sectionsContainer}>
       <div className={styles.adoptionSection}>
-        <div className={styles.pawsImageContainer}>
-          <img
-            src="/images/BlurredPaws.png"
-            alt="Patas desfocadas"
-            className={styles.pawsImage}
-          />
-        </div>
         <div className={styles.imageContainer}>
           <Image
             src="/images/CatAdoptionCard.png"

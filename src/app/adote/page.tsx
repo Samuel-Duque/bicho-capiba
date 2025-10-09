@@ -1,6 +1,7 @@
 import Image from "next/image";
-import FilterCarousel from "@/components/Adote/FilterCarousel";
+import FilterCarousel from "@/components/Adote/Filters/FilterCarousel";
 import styles from "./page.module.css";
+import CloseAnimalsFeed from "@/components/Adote/CloseAnimalsFeed/CloseAnimalsFeed";
 
 export default function Adotar() {
   return (
@@ -41,6 +42,11 @@ export default function Adotar() {
 
       <section className={styles.filtersSection}>
         <FilterCarousel />
+      </section>
+
+      <section className={styles.feedSection}>
+        <h1>Conheça os animais perto de você</h1>
+        <CloseAnimalsFeed />
       </section>
     </div>
   );

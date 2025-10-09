@@ -100,6 +100,19 @@
   margin: 0 auto;
 }
 
+.feedSection {
+  padding: 4rem 0;
+  display: flex;
+  align-items: center;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+}
+
+.feedSection h1 {
+  font-size: 2rem;
+  color: var(--text-color);
+}
+
 @media (max-width: 1200px) {
   .heroImage {
     right: -50px;

@@ -161,29 +161,15 @@
 
   .adoptionSection,
   .donationSection {
-    padding: 60px 30px;
-    min-height: 400px;
+    justify-content: center;
+    padding: 2rem 0;
   }
 
-  .adoptionImage,
+  .adoptionImage {
+    display: none;
+  }
+
   .donationImage {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-    margin-bottom: 30px;
-  }
-
-  .adoptionContent,
-  .donationContent {
-    margin-left: 0;
-    max-width: 100%;
-    padding-right: 0;
-    text-align: center;
-  }
-
-  .adoptionTitle,
-  .donationTitle {
-    font-size: 2rem;
+    display: none;
   }
 }
