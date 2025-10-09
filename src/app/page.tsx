@@ -11,7 +11,7 @@ export default function Home() {
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>
-            Encontre seu melhor amigo para sempre:{" "}
+            Encontre seu melhor amigo:{" "}
             <span className={styles.highlight}>adote</span>,{" "}
             <span className={styles.highlight}>ame</span> e seja{" "}
             <span className={styles.highlight}>amado.</span>
