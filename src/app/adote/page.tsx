@@ -1,4 +1,5 @@
 import Image from "next/image";
+import FilterCarousel from "@/components/Adote/FilterCarousel";
 import styles from "./page.module.css";
 
 export default function Adotar() {
@@ -36,6 +37,10 @@ export default function Adotar() {
             className={styles.blurredPaws2}
           />
         </div>
+      </section>
+
+      <section className={styles.filtersSection}>
+        <FilterCarousel />
       </section>
     </div>
   );

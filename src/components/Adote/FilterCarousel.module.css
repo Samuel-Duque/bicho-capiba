@@ -1,0 +1,84 @@
+.carousel {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.arrowButton {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #b5b5b5;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.arrowButton:hover {
+  border-color: #999999;
+  background: #f9f9f9;
+}
+
+.arrowButton:active {
+  transform: scale(0.95);
+}
+
+.cardsContainer {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.cardsWrapper {
+  display: flex;
+  gap: 3rem;
+  transition: transform 0.3s ease;
+}
+
+.cardItem {
+  flex: 1;
+  flex-shrink: 0;
+}
+
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fafafa;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  max-height: 120px;
+  overflow: hidden;
+}
+
+.card:hover {
+  border-color: #d0d0d0;
+  background: #f5f5f5;
+}
+
+.title {
+  padding: 20px;
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  font-family: var(--title-font);
+  color: #333;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.image {
+  height: 120px;
+  object-fit: contain;
+}

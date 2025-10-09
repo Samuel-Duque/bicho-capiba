@@ -91,6 +91,15 @@
   z-index: 1;
 }
 
+.filtersSection {
+  padding: 4rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+}
+
 @media (max-width: 1200px) {
   .heroImage {
     right: -50px;

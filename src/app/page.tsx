@@ -2,7 +2,7 @@ import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa6";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
-import AdoptionDonationSections from "@/components/AdoptionDonationSections";
+import AdoptionDonationSections from "@/components/Adote/AdoptionDonationSections";
 import styles from "./page.module.css";
 
 export default function Home() {
