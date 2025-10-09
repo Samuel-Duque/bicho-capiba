@@ -69,9 +69,11 @@ export default function FilterCarousel() {
           {filters.map((filter, index) => (
             <div key={index} className={styles.cardItem}>
               <div className={styles.card}>
-                <img
+                <Image
                   src={filter.imageSrc}
                   alt={filter.imageAlt}
+                  width={150}
+                  height={150}
                   style={{
                     width: filter.width ? filter.width : "auto",
                     marginLeft: filter.marginLeft ? filter.marginLeft : "0",

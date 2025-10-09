@@ -1,7 +1,6 @@
 .sectionsContainer {
   display: flex;
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  margin-bottom: 3rem;
 }
 
 .adoptionSection,
@@ -18,12 +17,14 @@
   display: flex;
   justify-content: end;
   background-color: var(--green-capiba);
+  border-radius: 16px 0 0 16px;
 }
 
 .donationSection {
   display: flex;
   justify-content: start;
   background-color: var(--yellow-capiba);
+  border-radius: 0 16px 16px 0;
 }
 
 .adoptionImage {
@@ -71,13 +72,13 @@
 }
 
 .adoptionContent {
-  padding: 4rem 2rem;
+  padding: 2rem;
   gap: 4rem;
   max-width: 500px;
 }
 
 .donationContent {
-  padding: 4rem 2rem;
+  padding: 2rem;
   gap: 4rem;
   max-width: 500px;
 }

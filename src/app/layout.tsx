@@ -84,8 +84,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <Header />
       <body>
+        <Header />
         <div style={{ minHeight: "100vh" }}>{children}</div>
       </body>
     </html>

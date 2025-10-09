@@ -9,6 +9,7 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./AnimalCard.module.css";
 
 interface AnimalCardProps {
@@ -57,7 +58,7 @@ export default function AnimalCard({
           onMouseEnter={() => setIsImageHovered(true)}
           onMouseLeave={() => setIsImageHovered(false)}
         >
-          <img src={image} alt={name} className={styles.image} />
+          <Image src={image} alt={name} className={styles.image} width={300} height={300} />
         </Link>
         <button
           className={`${styles.favoriteButton} ${
