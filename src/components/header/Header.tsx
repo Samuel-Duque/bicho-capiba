@@ -19,14 +19,16 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
-        <Image
-          src="/icons/logoCapibaDark.svg"
-          alt="Bicho Capiba Logo"
-          width={200}
-          height={40}
-          style={{ textAlign: "left" }}
-          priority
-        />
+        <Link href={"/"}>
+          <Image
+            src="/icons/logoCapibaDark.svg"
+            alt="Bicho Capiba Logo"
+            width={200}
+            height={40}
+            style={{ textAlign: "left" }}
+            priority
+          />
+        </Link>
       </div>
       <nav className={styles.nav}>
         {navigationItems.map((item) => (

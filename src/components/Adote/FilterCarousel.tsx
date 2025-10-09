@@ -21,17 +21,35 @@ const filters = [
     imageSrc: "/images/HorseFilter.png",
     imageAlt: "Cavalo",
   },
+  {
+    title: "Roedores",
+    imageSrc: "/images/CatFilter.png",
+    imageAlt: "Gato",
+  },
+  {
+    title: "Répteis",
+    imageSrc: "/images/DogFilter.png",
+    imageAlt: "Cachorro",
+  },
+  {
+    title: "Equinos",
+    imageSrc: "/images/HorseFilter.png",
+    imageAlt: "Cavalo",
+  },
 ];
 
 export default function FilterCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const cardsPerView = 3;
+  const maxIndex = Math.max(0, filters.length - cardsPerView);
+
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % filters.length);
+    setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + filters.length) % filters.length);
+    setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
   return (
@@ -40,22 +58,27 @@ export default function FilterCarousel() {
         className={styles.arrowButton}
         onClick={prevSlide}
         aria-label="Filtro anterior"
+        style={{ opacity: currentIndex === 0 ? 0.3 : 1 }}
       >
         <FaArrowLeft size={25} />
       </button>
 
       <div className={styles.cardsContainer}>
-        <div className={styles.cardsWrapper}>
+        <div
+          className={styles.cardsWrapper}
+          style={{
+            transform: `translateX(-${currentIndex * 30.3}%)`,
+          }}
+        >
           {filters.map((filter, index) => (
             <div key={index} className={styles.cardItem}>
               <div className={styles.card}>
-                <h3 className={styles.title}>{filter.title}</h3>
-
                 <img
                   src={filter.imageSrc}
                   alt={filter.imageAlt}
                   className={styles.image}
                 />
+                <h3 className={styles.title}>{filter.title}</h3>
               </div>
             </div>
           ))}
@@ -66,6 +89,7 @@ export default function FilterCarousel() {
         className={styles.arrowButton}
         onClick={nextSlide}
         aria-label="Próximo filtro"
+        style={{ opacity: currentIndex === maxIndex ? 0.3 : 1 }}
       >
         <FaArrowRight size={25} />
       </button>

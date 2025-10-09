@@ -1,7 +1,7 @@
 .carousel {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 60px;
   width: 100%;
   margin: 0 auto;
 }
@@ -37,13 +37,13 @@
 
 .cardsWrapper {
   display: flex;
-  gap: 3rem;
+  gap: 2rem;
   transition: transform 0.3s ease;
 }
 
 .cardItem {
-  flex: 1;
-  flex-shrink: 0;
+  flex: 0 0 calc((100% - 4rem) / 3.3);
+  min-width: 220px;
 }
 
 .card {
@@ -67,7 +67,7 @@
 .title {
   padding: 20px;
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 600;
   font-family: var(--title-font);
   color: #333;
@@ -79,6 +79,6 @@
 }
 
 .image {
-  height: 120px;
+  height: 90px;
   object-fit: contain;
 }
