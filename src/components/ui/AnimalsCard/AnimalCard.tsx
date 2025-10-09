@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   FaHeart,
   FaRegHeart,
@@ -7,6 +8,7 @@ import {
   FaPaw,
   FaMapMarkerAlt,
 } from "react-icons/fa";
+import Link from "next/link";
 import styles from "./AnimalCard.module.css";
 
 interface AnimalCardProps {
@@ -15,7 +17,7 @@ interface AnimalCardProps {
   image: string;
   gender: "male" | "female";
   age: string;
-  species: string;
+  breed: string;
   distance: string;
   neighborhood: string;
   city: string;
@@ -29,25 +31,42 @@ export default function AnimalCard({
   image,
   gender,
   age,
-  species,
+  breed,
   distance,
   neighborhood,
   city,
   isFavorite = false,
   onFavoriteClick,
 }: AnimalCardProps) {
+  const [isImageHovered, setIsImageHovered] = useState(false);
+
   const handleFavoriteClick = () => {
     onFavoriteClick?.(id);
   };
 
   return (
     <div className={styles.card}>
-      <div className={styles.imageContainer}>
-        <img src={image} alt={name} className={styles.image} />
+      <div
+        className={`${styles.imageContainer} ${
+          isImageHovered ? styles.imageHovered : ""
+        }`}
+      >
+        <Link
+          href={`/adote/${id}`}
+          className={styles.imageLink}
+          onMouseEnter={() => setIsImageHovered(true)}
+          onMouseLeave={() => setIsImageHovered(false)}
+        >
+          <img src={image} alt={name} className={styles.image} />
+        </Link>
         <button
-          className={`${styles.favoriteButton} ${isFavorite ? styles.favoriteButtonLiked : ''}`}
+          className={`${styles.favoriteButton} ${
+            isFavorite ? styles.favoriteButtonLiked : ""
+          }`}
           onClick={handleFavoriteClick}
-          title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+          title={
+            isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"
+          }
         >
           {isFavorite ? (
             <FaHeart className={styles.heartFilled} />
@@ -59,21 +78,43 @@ export default function AnimalCard({
 
       <div className={styles.content}>
         <div className={styles.nameRow}>
-          <h3 className={styles.name}>{name}</h3>
-          <div className={styles.genderIcon} title={gender === "male" ? "Macho" : "Fêmea"}>
-            {gender === "male" ? <FaMars /> : <FaVenus />}
-          </div>
+          <Link href={`/adote/${id}`} className={styles.nameLink}>
+            <h3 className={styles.name}>{name}</h3>
+          </Link>
+          <Link
+            href={`/adote/animais?gender=${gender}`}
+            className={styles.genderLink}
+          >
+            <div
+              className={styles.genderIcon}
+              title={gender === "male" ? "Macho" : "Fêmea"}
+            >
+              {gender === "male" ? <FaMars /> : <FaVenus />}
+            </div>
+          </Link>
         </div>
 
         <div className={styles.infoRow}>
-          <div className={styles.infoItem}>
-            <FaClock className={styles.icon} />
-            <span className={styles.text}>{age}</span>
-          </div>
-          <div className={styles.infoItem}>
-            <FaPaw className={styles.icon} />
-            <span className={styles.text}>{species}</span>
-          </div>
+          <Link
+            href={`/adote/animais?age=${age.replace(" ", "")}`}
+            className={styles.ageLink}
+          >
+            <div className={styles.infoItem}>
+              <FaClock className={styles.icon} />
+              <span className={styles.text}>{age}</span>
+            </div>
+          </Link>
+          <Link
+            href={`/adote/animais?breed=${breed
+              .toLowerCase()
+              .replace(" ", "-")}`}
+            className={styles.speciesLink}
+          >
+            <div className={styles.infoItem}>
+              <FaPaw className={styles.icon} />
+              <span className={styles.text}>{breed}</span>
+            </div>
+          </Link>
         </div>
 
         <div className={styles.locationRow}>

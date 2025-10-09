@@ -45,7 +45,6 @@ export default function Adotar() {
       </section>
 
       <section className={styles.feedSection}>
-        <h1>Conheça os animais perto de você</h1>
         <CloseAnimalsFeed />
       </section>
     </div>
