@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { FaArrowRight } from "react-icons/fa6";
 import styles from "./AdoptionDonationSections.module.css";
 
 export default function AdoptionDonationSections() {
@@ -29,7 +29,7 @@ export default function AdoptionDonationSections() {
           </p>
           <button className={styles.adoptionButton}>
             Quero adotar
-            <ArrowRight size={20} />
+            <FaArrowRight size={20} />
           </button>
         </div>
       </div>
@@ -56,7 +56,7 @@ export default function AdoptionDonationSections() {
           </p>
           <button className={styles.donationButton}>
             Apoiar uma ONG
-            <ArrowRight size={20} />
+            <FaArrowRight size={20} />
           </button>
         </div>
       </div>

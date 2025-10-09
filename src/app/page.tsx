@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { FaArrowRight } from "react-icons/fa6";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 import AdoptionDonationSections from "@/components/AdoptionDonationSections";
@@ -22,12 +22,12 @@ export default function Home() {
             com sua história única, aguardam pacientemente por alguém especial.
             Será você a pessoa que eles tanto esperam?
           </p>
-          <Link href="/adotar">
+          <Link href="/adote">
             <Button
               variant="primary"
               color="yellow"
               size="large"
-              icon={<ArrowRight size={20} />}
+              icon={<FaArrowRight size={20} />}
               iconPosition="right"
             >
               Saiba Mais
