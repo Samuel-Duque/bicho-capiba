@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa6";
 import Link from "next/link";
-import Button from "@/components/ui/Button/Button";
-import AdoptionDonationSections from "@/components/home/AdoptionDonationSections";
+import Button from "@/components/UI/Button/Button";
+import AdoptionDonationSections from "@/components/Home/AdoptionDonationSections";
 import styles from "./page.module.css";
 
 export default function Home() {

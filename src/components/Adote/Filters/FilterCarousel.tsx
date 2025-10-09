@@ -76,7 +76,6 @@ export default function FilterCarousel() {
                   height={150}
                   style={{
                     width: filter.width ? filter.width : "auto",
-                    marginLeft: filter.marginLeft ? filter.marginLeft : "0",
                   }}
                   className={styles.image}
                 />

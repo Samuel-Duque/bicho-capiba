@@ -1,9 +1,9 @@
 "use client";
 
-import React, { use, useState } from "react";
-import AnimalCard from "@/components/ui/AnimalsCard/AnimalCard";
-import Filter, { FilterOption } from "@/components/ui/Filter/Filter";
-import { mockAnimals } from "@/data/mockAnimals";
+import React, { useState } from "react";
+import AnimalCard from "@/components/UI/AnimalsCard/AnimalCard";
+import Filter, { FilterOption } from "@/components/UI/Filter/Filter";
+import { mockAnimals } from "@/data/MockAnimals";
 import {
   FaMars,
   FaVenus,
@@ -14,7 +14,7 @@ import {
   FaFeather,
   FaCarrot,
   FaRotateLeft,
-  FaPaw
+  FaPaw,
 } from "react-icons/fa6";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
 
@@ -84,11 +84,13 @@ const CloseAnimalsFeed = () => {
       age: "",
       gender: "",
       distance: "",
-      species: ""
+      species: "",
     });
   };
 
-  const hasActiveFilters = Object.values(filters).some(filter => filter !== "");
+  const hasActiveFilters = Object.values(filters).some(
+    (filter) => filter !== ""
+  );
 
   const filteredAnimals = mockAnimals.filter((animal) => {
     if (filters.age && !animal.age.includes(filters.age)) return false;
@@ -137,8 +139,11 @@ const CloseAnimalsFeed = () => {
 
       <div className={styles.resultsRow}>
         <span className={styles.resultsCount}>
-          {filteredAnimals.length} {filteredAnimals.length === 1 ? 'animal encontrado' : 'animais encontrados'}
-          {hasActiveFilters && ' com esses filtros'}
+          {filteredAnimals.length}{" "}
+          {filteredAnimals.length === 1
+            ? "animal encontrado"
+            : "animais encontrados"}
+          {hasActiveFilters && " com esses filtros"}
         </span>
         {hasActiveFilters && (
           <button className={styles.resetButton} onClick={resetFilters}>
