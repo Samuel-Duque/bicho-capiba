@@ -23,18 +23,14 @@ const filters = [
   },
   {
     title: "Roedores",
-    imageSrc: "/images/CatFilter.png",
-    imageAlt: "Gato",
+    imageSrc: "/images/RatFilter.png",
+    imageAlt: "Rato",
   },
   {
     title: "Répteis",
-    imageSrc: "/images/DogFilter.png",
-    imageAlt: "Cachorro",
-  },
-  {
-    title: "Equinos",
-    imageSrc: "/images/HorseFilter.png",
-    imageAlt: "Cavalo",
+    imageSrc: "/images/SnakeFilter.png",
+    imageAlt: "Cobra",
+    width: "120px",
   },
 ];
 
@@ -76,6 +72,10 @@ export default function FilterCarousel() {
                 <img
                   src={filter.imageSrc}
                   alt={filter.imageAlt}
+                  style={{
+                    width: filter.width ? filter.width : "auto",
+                    marginLeft: filter.marginLeft ? filter.marginLeft : "0",
+                  }}
                   className={styles.image}
                 />
                 <h3 className={styles.title}>{filter.title}</h3>
