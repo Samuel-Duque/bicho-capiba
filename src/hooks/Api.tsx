@@ -1,11 +1,13 @@
 import axios from "axios";
 
-const baseUrl = process.env.NEXT_API_URL || "http://localhost:3333";
-const withCredentials = process.env.NEXT_PUBLIC_WITH_CREDENTIALS !== "false";
+const baseUrl =
+  process.env.NEXT_API_URL ||
+  "https://governance-newbie-diego-olympus.trycloudflare.com";
+const withCredentials = true;
 
 const createApiInstance = () => {
   const instance = axios.create({
-    baseURL: `${baseUrl}/`,
+    baseURL: `${baseUrl}/api`,
     timeout: 30000,
     withCredentials,
   });

@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AnimalCard from "@/components/UI/AnimalsCard/AnimalCard";
 import Filter, { FilterOption } from "@/components/UI/Filter/Filter";
-import { mockAnimals } from "@/data/MockAnimals";
+import { fetchAnimals } from "@/services/Animals/Animal";
 import {
   FaMars,
   FaVenus,
@@ -56,6 +56,8 @@ const speciesOptions: FilterOption[] = [
 ];
 
 const CloseAnimalsFeed = () => {
+  const [animals, setAnimals] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [filters, setFilters] = useState<Filters>({
     idade: "",
@@ -63,6 +65,22 @@ const CloseAnimalsFeed = () => {
     distance: "",
     especie: "",
   });
+
+  useEffect(() => {
+    const loadAnimals = async () => {
+      try {
+        setLoading(true);
+        const animalsData = await fetchAnimals();
+        setAnimals(animalsData);
+      } catch (error) {
+        console.error("Failed to fetch animals:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadAnimals();
+  }, []);
 
   const handleFavoriteClick = (animalId: string) => {
     setFavorites((prev) =>
@@ -92,7 +110,7 @@ const CloseAnimalsFeed = () => {
     (filter) => filter !== ""
   );
 
-  const filteredAnimals = mockAnimals.filter((animal) => {
+  const filteredAnimals = animals.filter((animal) => {
     if (filters.idade && animal.idade.toString() !== filters.idade.replace(" anos", "")) return false;
     if (filters.sexo && animal.sexo !== filters.sexo) return false;
     if (filters.distance && !animal.distance.includes(filters.distance))
@@ -100,6 +118,17 @@ const CloseAnimalsFeed = () => {
     if (filters.especie && animal.especie !== filters.especie) return false;
     return true;
   });
+
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1>Conheça os animais perto de você</h1>
+        </div>
+        <div className={styles.loading}>Carregando animais...</div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
