@@ -58,7 +58,7 @@ export default function AnimalCard({
           onMouseEnter={() => setIsImageHovered(true)}
           onMouseLeave={() => setIsImageHovered(false)}
         >
-          <Image src={image} alt={nome} className={styles.image} width={300} height={300} />
+          <Image src={image} alt={nome} className={styles.image} fill={true} />
         </Link>
         <button
           className={`${styles.favoriteButton} ${
@@ -96,10 +96,7 @@ export default function AnimalCard({
         </div>
 
         <div className={styles.infoRow}>
-          <Link
-            href={`/adote/animais?age=${idade}`}
-            className={styles.ageLink}
-          >
+          <Link href={`/adote/animais?age=${idade}`} className={styles.ageLink}>
             <div className={styles.infoItem}>
               <FaClock className={styles.icon} />
               <span className={styles.text}>{idade} anos</span>

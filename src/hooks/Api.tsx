@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const baseUrl =
-  process.env.NEXT_API_URL ||
-  "https://governance-newbie-diego-olympus.trycloudflare.com";
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://workplace-serves-seeking-microwave.trycloudflare.com";
 const withCredentials = true;
 
 const createApiInstance = () => {
