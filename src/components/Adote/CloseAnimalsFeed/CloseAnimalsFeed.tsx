@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import AnimalCard from "@/components/UI/AnimalsCard/AnimalCard";
 import Filter, { FilterOption } from "@/components/UI/Filter/Filter";
+import CloseAnimalsFeedSkeleton from "@/components/UI/Skeletons/CloseAnimalsFeedSkeleton";
 import { fetchAnimals } from "@/services/Animals/Animal";
 import {
   FaMars,
@@ -26,6 +27,14 @@ interface Filters {
   distance: string;
   especie: string;
 }
+
+const speciesMap: { [key: string]: string } = {
+  Cachorro: "dog",
+  Gato: "cat",
+  Cavalo: "horse",
+  Pássaro: "bird",
+  Coelho: "rabbit",
+};
 
 const ageOptions: FilterOption[] = [
   { value: "meses", label: "Filhotes (meses)", icon: <LiaBirthdayCakeSolid /> },
@@ -111,23 +120,24 @@ const CloseAnimalsFeed = () => {
   );
 
   const filteredAnimals = animals.filter((animal) => {
-    if (filters.idade && animal.idade.toString() !== filters.idade.replace(" anos", "")) return false;
-    if (filters.sexo && animal.sexo !== filters.sexo) return false;
-    if (filters.distance && !animal.distance.includes(filters.distance))
+    if (
+      filters.idade &&
+      animal.idade.toString() !== filters.idade.replace(" anos", "")
+    )
       return false;
-    if (filters.especie && animal.especie !== filters.especie) return false;
+    if (filters.sexo && animal.sexo !== filters.sexo) return false;
+    if (filters.distance) return false;
+    if (
+      filters.especie &&
+      (speciesMap[animal.especie] || animal.especie.toLowerCase()) !==
+        filters.especie
+    )
+      return false;
     return true;
   });
 
   if (loading) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <h1>Conheça os animais perto de você</h1>
-        </div>
-        <div className={styles.loading}>Carregando animais...</div>
-      </div>
-    );
+    return <CloseAnimalsFeedSkeleton />;
   }
 
   return (
@@ -196,17 +206,19 @@ const CloseAnimalsFeed = () => {
         <div className={styles.feed}>
           {filteredAnimals.map((animal) => (
             <AnimalCard
-              key={animal.id}
-              id={animal.id}
+              key={animal.uuid}
+              id={animal.uuid}
               nome={animal.nome}
-              image={animal.image}
+              image={
+                animal.fotos?.[0]?.url ? `https://${animal.fotos[0].url}` : ""
+              }
               sexo={animal.sexo}
               idade={animal.idade}
               raca={animal.raca}
-              distance={animal.distance}
-              neighborhood={animal.neighborhood}
-              city={animal.city}
-              isFavorite={favorites.includes(animal.id)}
+              distancia="Próximo"
+              bairroOng={animal.ong?.nome || "Não informado"}
+              cidadeOng="Recife"
+              isFavorite={favorites.includes(animal.uuid)}
               onFavoriteClick={handleFavoriteClick}
             />
           ))}

@@ -19,9 +19,9 @@ interface AnimalCardProps {
   sexo: "M" | "F";
   idade: number;
   raca: string;
-  distance: string;
-  neighborhood: string;
-  city: string;
+  distancia: string;
+  bairroOng: string;
+  cidadeOng: string;
   isFavorite?: boolean;
   onFavoriteClick?: (id: string) => void;
 }
@@ -33,9 +33,9 @@ export default function AnimalCard({
   sexo,
   idade,
   raca,
-  distance,
-  neighborhood,
-  city,
+  distancia,
+  bairroOng,
+  cidadeOng,
   isFavorite = false,
   onFavoriteClick,
 }: AnimalCardProps) {
@@ -119,7 +119,7 @@ export default function AnimalCard({
           <div className={styles.infoItem}>
             <FaMapMarkerAlt className={styles.icon} />
             <span className={styles.text}>
-              {distance} • {neighborhood}, {city}
+              {distancia} • {bairroOng}, {cidadeOng}
             </span>
           </div>
         </div>

@@ -1,13 +1,11 @@
 import axios from "axios";
 
-const baseUrl =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "https://workplace-serves-seeking-microwave.trycloudflare.com";
+const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
 const withCredentials = true;
 
 const createApiInstance = () => {
   const instance = axios.create({
-    baseURL: `${baseUrl}/api`,
+    baseURL: `${baseUrl}api`,
     timeout: 30000,
     withCredentials,
   });
