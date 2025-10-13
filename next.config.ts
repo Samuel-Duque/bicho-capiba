@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         hostname: "dxx2sp3l3nwby.cloudfront.net",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+        pathname: "/**",
+      },
     ],
   },
 };

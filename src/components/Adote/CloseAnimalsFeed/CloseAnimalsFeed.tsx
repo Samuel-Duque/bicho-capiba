@@ -209,9 +209,7 @@ const CloseAnimalsFeed = () => {
               key={animal.uuid}
               id={animal.uuid}
               nome={animal.nome}
-              image={
-                animal.fotos?.[0]?.url ? `https://${animal.fotos[0].url}` : ""
-              }
+              image={animal.fotos?.[0]?.url}
               sexo={animal.sexo}
               idade={animal.idade}
               raca={animal.raca}
