@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import Button from "@/components/UI/Button/Button";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useAuth } from "@/contexts/AuthContext";
+import { handleApiError, ErrorState } from "@/utils/ErrorHandler";
 import styles from "./page.module.css";
 
 export default function LoginPage() {
@@ -13,26 +15,31 @@ export default function LoginPage() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<ErrorState | null>(null);
+  const { login, isLoading } = useAuth();
+  const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    setError(null);
 
     try {
-      console.log("Login attempt:", formData);
-    } catch (error) {
-      console.error("Login error:", error);
-    } finally {
-      setIsLoading(false);
+      await login(formData);
+      router.push("/");
+    } catch (err: any) {
+      const customErrorMessages = {
+        401: "E-mail ou senha estão incorretos."
+      };
+      const errorState = handleApiError(err, customErrorMessages);
+      setError(errorState);
     }
   };
 
@@ -40,18 +47,13 @@ export default function LoginPage() {
     <div className={styles.container}>
       <div className={styles.loginCard}>
         <div className={styles.header}>
-          <Image
-            src="/icons/logoCapibaDark.svg"
-            alt="Bicho Capiba"
-            width={180}
-            height={36}
-            priority
-          />
           <h1>Entrar na sua conta</h1>
           <p>Bem-vindo de volta! Entre para continuar sua jornada de adoção.</p>
         </div>
 
         <form onSubmit={handleSubmit} className={styles.form}>
+          {error && <div className={styles.error}>{error.message}</div>}
+
           <div className={styles.inputGroup}>
             <label htmlFor="email">E-mail</label>
             <input
@@ -96,7 +98,7 @@ export default function LoginPage() {
             color="green"
             size="large"
             disabled={isLoading}
-            onClick={() => {}}
+            onClick={handleSubmit}
           >
             {isLoading ? "Entrando..." : "Entrar"}
           </Button>

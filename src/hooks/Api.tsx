@@ -15,7 +15,7 @@ const createApiInstance = () => {
     async (error) => {
       if (error.response?.status === 401) {
         try {
-          await instance.post("/user/auth/logout");
+          await instance.post("/auth/logout");
         } catch (logoutError) {
           return Promise.reject(logoutError);
         }

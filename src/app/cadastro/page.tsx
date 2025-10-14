@@ -24,15 +24,15 @@ export default function SignupPage() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
 
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
@@ -94,15 +94,11 @@ export default function SignupPage() {
     <div className={styles.container}>
       <div className={styles.signupCard}>
         <div className={styles.header}>
-          <Image
-            src="/icons/logoCapibaDark.svg"
-            alt="Bicho Capiba"
-            width={180}
-            height={36}
-            priority
-          />
           <h1>Criar sua conta</h1>
-          <p>Junte-se a nós e ajude a transformar vidas! Cadastre-se para adotar seu novo melhor amigo.</p>
+          <p>
+            Junte-se a nós e ajude a transformar vidas! Cadastre-se para adotar
+            seu novo melhor amigo.
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -118,7 +114,9 @@ export default function SignupPage() {
                 placeholder="Seu nome"
                 required
               />
-              {errors.firstName && <span className={styles.error}>{errors.firstName}</span>}
+              {errors.firstName && (
+                <span className={styles.error}>{errors.firstName}</span>
+              )}
             </div>
 
             <div className={styles.inputGroup}>
@@ -132,7 +130,9 @@ export default function SignupPage() {
                 placeholder="Seu sobrenome"
                 required
               />
-              {errors.lastName && <span className={styles.error}>{errors.lastName}</span>}
+              {errors.lastName && (
+                <span className={styles.error}>{errors.lastName}</span>
+              )}
             </div>
           </div>
 
@@ -147,7 +147,9 @@ export default function SignupPage() {
               placeholder="seu@email.com"
               required
             />
-            {errors.email && <span className={styles.error}>{errors.email}</span>}
+            {errors.email && (
+              <span className={styles.error}>{errors.email}</span>
+            )}
           </div>
 
           <div className={styles.inputGroup}>
@@ -182,7 +184,9 @@ export default function SignupPage() {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
-            {errors.password && <span className={styles.error}>{errors.password}</span>}
+            {errors.password && (
+              <span className={styles.error}>{errors.password}</span>
+            )}
           </div>
 
           <div className={styles.inputGroup}>
@@ -205,7 +209,9 @@ export default function SignupPage() {
                 {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
-            {errors.confirmPassword && <span className={styles.error}>{errors.confirmPassword}</span>}
+            {errors.confirmPassword && (
+              <span className={styles.error}>{errors.confirmPassword}</span>
+            )}
           </div>
 
           <div className={styles.checkboxGroup}>
@@ -228,7 +234,9 @@ export default function SignupPage() {
                 </Link>
               </span>
             </label>
-            {errors.agreeToTerms && <span className={styles.error}>{errors.agreeToTerms}</span>}
+            {errors.agreeToTerms && (
+              <span className={styles.error}>{errors.agreeToTerms}</span>
+            )}
           </div>
 
           <Button

@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import AnimalCard from "@/components/UI/AnimalsCard/AnimalCard";
 import Filter, { FilterOption } from "@/components/UI/Filter/Filter";
 import CloseAnimalsFeedSkeleton from "@/components/UI/Skeletons/CloseAnimalsFeedSkeleton";
 import AnimalCardSkeleton from "@/components/UI/Skeletons/AnimalCardSkeleton";
 import { fetchAnimals } from "@/services/Animals/Animal";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import {
   FaMars,
   FaVenus,
@@ -79,7 +80,6 @@ const CloseAnimalsFeed = () => {
     distance: "",
     especie: "",
   });
-  const observerRef = useRef<HTMLDivElement>(null);
 
   const loadAnimals = useCallback(
     async (page: number = 1, reset: boolean = false) => {
@@ -115,32 +115,20 @@ const CloseAnimalsFeed = () => {
     []
   );
 
+  const handleLoadMore = useCallback(() => {
+    if (!loadingMore && hasMoreData) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  }, [loadingMore, hasMoreData]);
+
+  const observerRef = useIntersectionObserver({
+    onIntersect: handleLoadMore,
+    enabled: hasMoreData && animals.length > 0,
+  });
+
   useEffect(() => {
     loadAnimals(1, true);
   }, []);
-
-  useEffect(() => {
-    if (!hasMoreData || animals.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !loadingMore && hasMoreData) {
-          setCurrentPage((prev) => prev + 1);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
-      }
-    };
-  }, [loadingMore, hasMoreData, currentPage, animals.length]);
 
   useEffect(() => {
     if (currentPage > 1) {
@@ -310,8 +298,8 @@ const CloseAnimalsFeed = () => {
               idade={animal.idade}
               raca={animal.raca}
               distancia="Próximo"
-              bairroOng={animal.ong?.nome || "Não informado"}
-              cidadeOng="Recife"
+              bairroOng={animal.ong?.bairro || "Não informado"}
+              cidadeOng={animal.ong?.cidade || "Não informado"}
               isFavorite={favorites.includes(animal.uuid)}
               onFavoriteClick={handleFavoriteClick}
             />
@@ -326,7 +314,7 @@ const CloseAnimalsFeed = () => {
         </div>
       )}
 
-      {hasMoreData && <div ref={observerRef} className={styles.observer} />}
+      <div ref={observerRef} className={styles.observer} />
     </div>
   );
 };

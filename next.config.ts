@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "cataas.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "picsum.photos",
         pathname: "/**",
       },
