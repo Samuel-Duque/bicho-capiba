@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import AnimalCard from "@/components/UI/AnimalsCard/AnimalCard";
 import Filter, { FilterOption } from "@/components/UI/Filter/Filter";
 import CloseAnimalsFeedSkeleton from "@/components/UI/Skeletons/CloseAnimalsFeedSkeleton";
+import AnimalCardSkeleton from "@/components/UI/Skeletons/AnimalCardSkeleton";
 import { fetchAnimals } from "@/services/Animals/Animal";
 import {
   FaMars,
@@ -67,29 +68,85 @@ const speciesOptions: FilterOption[] = [
 const CloseAnimalsFeed = () => {
   const [animals, setAnimals] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMoreData, setHasMoreData] = useState(true);
+  const [totalAnimals, setTotalAnimals] = useState(0);
   const [filters, setFilters] = useState<Filters>({
     idade: "",
     sexo: "",
     distance: "",
     especie: "",
   });
+  const observerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const loadAnimals = async () => {
+  const loadAnimals = useCallback(
+    async (page: number = 1, reset: boolean = false) => {
       try {
-        setLoading(true);
-        const animalsData = await fetchAnimals();
-        setAnimals(animalsData);
+        if (page === 1) {
+          setLoading(true);
+        } else {
+          setLoadingMore(true);
+        }
+
+        const { animals: newAnimals, pagination } = await fetchAnimals(
+          page,
+          10
+        );
+
+        setAnimals((prev) => {
+          if (reset) {
+            return newAnimals;
+          } else {
+            return [...prev, ...newAnimals];
+          }
+        });
+
+        setTotalAnimals(pagination.total);
+        setHasMoreData(newAnimals.length > 0);
       } catch (error) {
         console.error("Failed to fetch animals:", error);
       } finally {
         setLoading(false);
+        setLoadingMore(false);
+      }
+    },
+    []
+  );
+
+  useEffect(() => {
+    loadAnimals(1, true);
+  }, []);
+
+  useEffect(() => {
+    if (!hasMoreData || animals.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loadingMore && hasMoreData) {
+          setCurrentPage((prev) => prev + 1);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
       }
     };
+  }, [loadingMore, hasMoreData, currentPage, animals.length]);
 
-    loadAnimals();
-  }, []);
+  useEffect(() => {
+    if (currentPage > 1) {
+      loadAnimals(currentPage, false);
+    }
+  }, [currentPage, loadAnimals]);
 
   const handleFavoriteClick = (animalId: string) => {
     setFavorites((prev) =>
@@ -113,6 +170,8 @@ const CloseAnimalsFeed = () => {
       distance: "",
       especie: "",
     });
+    setCurrentPage(1);
+    loadAnimals(1, true);
   };
 
   const hasActiveFilters = Object.values(filters).some(
@@ -137,7 +196,44 @@ const CloseAnimalsFeed = () => {
   });
 
   if (loading) {
-    return <CloseAnimalsFeedSkeleton />;
+    return (
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1>Conheça os animais perto de você</h1>
+
+          <div className={styles.filters}>
+            <Filter
+              value={filters.idade}
+              onChange={(value) => handleFilterChange("idade", value)}
+              options={ageOptions}
+              placeholder="Todas as idades"
+            />
+
+            <Filter
+              value={filters.sexo}
+              onChange={(value) => handleFilterChange("sexo", value)}
+              options={genderOptions}
+              placeholder="Todos os gêneros"
+            />
+
+            <Filter
+              value={filters.distance}
+              onChange={(value) => handleFilterChange("distance", value)}
+              options={distanceOptions}
+              placeholder="Todas as distâncias"
+            />
+
+            <Filter
+              value={filters.especie}
+              onChange={(value) => handleFilterChange("especie", value)}
+              options={speciesOptions}
+              placeholder="Todas as espécies"
+            />
+          </div>
+        </div>
+        <CloseAnimalsFeedSkeleton />
+      </div>
+    );
   }
 
   return (
@@ -220,8 +316,17 @@ const CloseAnimalsFeed = () => {
               onFavoriteClick={handleFavoriteClick}
             />
           ))}
+          {loadingMore && (
+            <>
+              <AnimalCardSkeleton />
+              <AnimalCardSkeleton />
+              <AnimalCardSkeleton />
+            </>
+          )}
         </div>
       )}
+
+      {hasMoreData && <div ref={observerRef} className={styles.observer} />}
     </div>
   );
 };

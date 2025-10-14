@@ -58,7 +58,13 @@ export default function AnimalCard({
           onMouseEnter={() => setIsImageHovered(true)}
           onMouseLeave={() => setIsImageHovered(false)}
         >
-          <Image src={image} alt={nome} className={styles.image} fill={true} />
+          <Image
+            src={image}
+            alt={nome}
+            className={styles.image}
+            fill
+            sizes="(max-height: 200px)"
+          />
         </Link>
         <button
           className={`${styles.favoriteButton} ${
