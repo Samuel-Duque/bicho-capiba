@@ -9,7 +9,8 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import Link from "next/link";
-import Image from "next/image";
+import ImageWithFallback from "../../utils/ImageWithFallback";
+import { likeAnimal, unlikeAnimal } from "@/services/Animals/Animal";
 import styles from "./AnimalCard.module.css";
 
 interface AnimalCardProps {
@@ -41,8 +42,17 @@ export default function AnimalCard({
 }: AnimalCardProps) {
   const [isImageHovered, setIsImageHovered] = useState(false);
 
-  const handleFavoriteClick = () => {
-    onFavoriteClick?.(id);
+  const handleFavoriteClick = async () => {
+    try {
+      if (isFavorite) {
+        await unlikeAnimal(id);
+      } else {
+        await likeAnimal(id);
+      }
+      onFavoriteClick?.(id);
+    } catch (error) {
+      console.error("Failed to toggle like:", error);
+    }
   };
 
   return (
@@ -58,7 +68,7 @@ export default function AnimalCard({
           onMouseEnter={() => setIsImageHovered(true)}
           onMouseLeave={() => setIsImageHovered(false)}
         >
-          <Image
+          <ImageWithFallback
             src={image}
             alt={nome}
             className={styles.image}

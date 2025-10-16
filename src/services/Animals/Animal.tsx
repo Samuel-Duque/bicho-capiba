@@ -13,3 +13,23 @@ export const fetchAnimals = async (page: number = 1, limit: number = 10) => {
     throw error;
   }
 };
+
+export const likeAnimal = async (animalId: string): Promise<void> => {
+  try {
+    const api = getApiInstance();
+    await api.post(`/animals/${animalId}/like`);
+  } catch (error) {
+    console.error("Error liking animal:", error);
+    throw error;
+  }
+};
+
+export const unlikeAnimal = async (animalId: string): Promise<void> => {
+  try {
+    const api = getApiInstance();
+    await api.delete(`/animals/${animalId}/like`);
+  } catch (error) {
+    console.error("Error unliking animal:", error);
+    throw error;
+  }
+};
