@@ -58,11 +58,6 @@ export default function ImageWithFallback({
   }
 
   return (
-    <Image
-      {...props}
-      alt={alt}
-      className={className}
-      onError={handleError}
-    />
+    <Image {...props} alt={alt} className={className} onError={handleError} />
   );
 }
