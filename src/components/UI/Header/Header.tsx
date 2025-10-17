@@ -24,7 +24,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout, isLoading } = useAuth();
 
-  const isAuthPage = pathname === "/entrar" || pathname === "/cadastro";
+  const isAuthPage = pathname === "/entrar" || pathname === "/cadastro" || pathname === "/cadastro-ong" || pathname === "/cadastro-sucesso";
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

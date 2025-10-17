@@ -6,7 +6,7 @@ const withCredentials = true;
 const createApiInstance = () => {
   const instance = axios.create({
     baseURL: `${baseUrl}api`,
-    timeout: 30000,
+    timeout: 40000,
     withCredentials,
   });
 

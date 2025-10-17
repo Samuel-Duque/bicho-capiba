@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Button from "@/components/UI/Button/Button";
@@ -16,8 +16,14 @@ export default function LoginPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<ErrorState | null>(null);
-  const { login, isLoading } = useAuth();
+  const { login, logout, isLoading, isAuthenticated } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      logout();
+    }
+  }, [isAuthenticated, logout]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

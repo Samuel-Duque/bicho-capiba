@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/UI/Button/Button";
-import { FaHome } from "react-icons/fa";
 import styles from "./not-found.module.css";
 
 export default function NotFound() {
@@ -10,7 +9,7 @@ export default function NotFound() {
       <div className={styles.content}>
         <div className={styles.imageContainer}>
           <Image
-            src="/images/404cat.png"
+            src="/images/404Cat.png"
             alt="Gato astronauta perdido no espaço"
             width={400}
             height={400}

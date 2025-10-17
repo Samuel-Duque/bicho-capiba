@@ -1,14 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Button from "@/components/UI/Button/Button";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { validateUserSignupForm, UserSignupFormData } from "@/validators/auth/userSignup";
+import { useAuth } from "@/contexts/AuthContext";
 import styles from "./page.module.css";
 
 export default function SignupPage() {
-  const [formData, setFormData] = useState({
+  const { logout, isAuthenticated } = useAuth();
+  const [formData, setFormData] = useState<UserSignupFormData>({
     firstName: "",
     lastName: "",
     email: "",
@@ -21,6 +24,12 @@ export default function SignupPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      logout();
+    }
+  }, [isAuthenticated, logout]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -38,36 +47,7 @@ export default function SignupPage() {
   };
 
   const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = "Nome é obrigatório";
-    }
-
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = "Sobrenome é obrigatório";
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = "E-mail é obrigatório";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "E-mail inválido";
-    }
-
-    if (!formData.password) {
-      newErrors.password = "Senha é obrigatória";
-    } else if (formData.password.length < 8) {
-      newErrors.password = "Senha deve ter pelo menos 8 caracteres";
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Senhas não coincidem";
-    }
-
-    if (!formData.agreeToTerms) {
-      newErrors.agreeToTerms = "Você deve aceitar os termos de uso";
-    }
-
+    const newErrors = validateUserSignupForm(formData);
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
