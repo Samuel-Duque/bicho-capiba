@@ -10,7 +10,7 @@
   justify-content: center;
   max-width: var(--page-max-width);
   width: 100%;
-  margin-bottom: 6%;
+  margin-bottom: 15%;
 }
 
 .textContent {
@@ -19,6 +19,15 @@
   text-align: center;
   padding: 40px;
   border-radius: 8px;
+}
+.successImage {
+  display: flex;
+  justify-content: center;
+  margin-bottom: -20px;
+}
+
+.successImage img {
+  object-fit: contain;
 }
 
 .title {

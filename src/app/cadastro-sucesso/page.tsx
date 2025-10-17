@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import Button from "@/components/UI/Button/Button";
 import { FaArrowRight } from "react-icons/fa";
@@ -13,6 +14,15 @@ export default function CadastroSucesso() {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.textContent}>
+          <div className={styles.successImage}>
+            <Image
+              src="/images/OngSuccess.png"
+              alt="ONG Success"
+              width={200}
+              height={200}
+              priority
+            />
+          </div>
           <h1 className={styles.title}>{nomeOng}</h1>
           <h2 className={styles.subtitle}>
             Sua ONG foi cadastrada com sucesso!
