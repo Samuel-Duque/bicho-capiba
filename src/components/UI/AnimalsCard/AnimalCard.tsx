@@ -9,7 +9,7 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import Link from "next/link";
-import ImageWithFallback from "../../utils/ImageWithFallback";
+import ImageWithFallback from "../Images/ImageWithFallback";
 import { likeAnimal, unlikeAnimal } from "@/services/Animals/Animal";
 import styles from "./AnimalCard.module.css";
 

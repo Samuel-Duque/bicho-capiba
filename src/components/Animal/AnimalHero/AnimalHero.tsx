@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import ImageWithFallback from "@/components/utils/ImageWithFallback";
+import ImageWithFallback from "@/components/UI/Images/ImageWithFallback";
 import styles from "./AnimalHero.module.css";
 
 interface Animal {

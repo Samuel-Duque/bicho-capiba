@@ -187,18 +187,9 @@
     aspect-ratio: 4/3;
   }
 
-  .leftSideImages {
-    margin-right: -30px;
-  }
-
+  .leftSideImages,
   .rightSideImages {
-    margin-left: -30px;
-  }
-
-  .sideImageContainer {
-    width: min(80px, 20vw);
-    aspect-ratio: 4/3;
-    filter: blur(2px) brightness(0.6);
+    display: none;
   }
 
   .navButton {

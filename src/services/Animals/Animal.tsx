@@ -33,3 +33,14 @@ export const unlikeAnimal = async (animalId: string): Promise<void> => {
     throw error;
   }
 };
+
+export const fetchAnimalById = async (animalId: string) => {
+  try {
+    const api = getApiInstance();
+    const response = await api.get(`/animals/${animalId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching animal:", error);
+    throw error;
+  }
+};

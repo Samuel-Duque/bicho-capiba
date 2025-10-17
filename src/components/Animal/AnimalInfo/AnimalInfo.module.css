@@ -14,7 +14,7 @@
 .leftColumn {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .rightColumn {
@@ -111,6 +111,14 @@
   background: #c23813;
 }
 
+.adoptButtonMobile {
+  display: none;
+}
+
+.adoptButtonDesktop {
+  display: block;
+}
+
 .mapContainer {
   border-radius: 0.5rem;
   overflow: hidden;
@@ -133,8 +141,8 @@
 
 .ongImageContainer {
   position: relative;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
@@ -193,22 +201,87 @@
     padding: 0 1rem;
   }
 
-  .title {
-    font-size: 2rem;
+  .adoptButtonDesktop {
+    display: none;
   }
 
-  .adoptButton {
+  .adoptButtonMobile {
+    display: block;
     padding: 1.25rem 1.5rem;
     font-size: 1.1rem;
   }
 
-  .ongHeader {
-    flex-direction: column;
+  .title {
+    font-size: 2rem;
+  }
+
+  .stats {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .statItem {
+    font-size: 0.95rem;
     align-items: flex-start;
-    gap: 1rem;
+  }
+
+  .statIcon {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+  }
+
+  .ongImageContainer {
+    width: 45px;
+    height: 45px;
+  }
+
+  .ongName {
+    font-size: 1.1rem;
+  }
+
+  .ongAddress {
+    font-size: 0.85rem;
   }
 
   .phoneButton {
-    align-self: flex-end;
+    width: 35px;
+    height: 35px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats {
+    gap: 0.5rem;
+  }
+
+  .statItem {
+    font-size: 0.9rem;
+  }
+
+  .statIcon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .ongImageContainer {
+    width: 40px;
+    height: 40px;
+  }
+
+  .ongName {
+    font-size: 1rem;
+  }
+
+  .ongAddress {
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .phoneButton {
+    width: 32px;
+    height: 32px;
+    padding: 8px;
   }
 }

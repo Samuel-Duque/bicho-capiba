@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { LuBuilding, LuCake, LuHeartOff } from "react-icons/lu";
 import { BsFillTelephoneFill } from "react-icons/bs";
-import ImageWithFallback from "@/components/utils/ImageWithFallback";
+import ImageWithFallback from "@/components/UI/Images/ImageWithFallback";
 import styles from "./AnimalInfo.module.css";
 
 interface Animal {
@@ -43,6 +43,9 @@ export default function AnimalInfo({ animal, ong }: AnimalInfoProps) {
       ? storyText.substring(0, maxLength) + "..."
       : storyText;
 
+  const encodedAddress = encodeURIComponent(ong.endereco);
+  const mapUrl = `https://maps.google.com/maps?q=${encodedAddress}&output=embed`;
+
   return (
     <section className={styles.animalInfo}>
       <div className={styles.container}>
@@ -66,6 +69,12 @@ export default function AnimalInfo({ animal, ong }: AnimalInfoProps) {
             </div>
           </div>
 
+          <button
+            className={`${styles.adoptButton} ${styles.adoptButtonMobile}`}
+          >
+            Quero adotar {animal.sexo === "M" ? "o" : "a"} {animal.nome}
+          </button>
+
           <h2 className={styles.historyTitle}>Minha História</h2>
           <div className={styles.historySection}>
             <div className={styles.historyText}>
@@ -87,13 +96,15 @@ export default function AnimalInfo({ animal, ong }: AnimalInfoProps) {
         </div>
 
         <div className={styles.rightColumn}>
-          <button className={styles.adoptButton}>
+          <button
+            className={`${styles.adoptButton} ${styles.adoptButtonDesktop}`}
+          >
             Quero adotar {animal.sexo === "M" ? "o" : "a"} {animal.nome}
           </button>
 
           <div className={styles.mapContainer}>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1975!2d-46.6333824!3d-23.5505199!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5a2b2ed7f3a1%3A0xab35da2f5ca62674!2sSão%20Paulo%2C%20SP!5e0!3m2!1spt!2sbr!4v1697875200000!5m2!1spt!2sbr"
+              src={mapUrl}
               width="100%"
               height="250"
               style={{ border: 0 }}
