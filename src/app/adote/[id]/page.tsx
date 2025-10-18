@@ -5,7 +5,6 @@ import { useParams, useRouter } from "next/navigation";
 import AnimalHero from "@/components/Animal/AnimalHero/AnimalHero";
 import AnimalInfo from "@/components/Animal/AnimalInfo/AnimalInfo";
 import AnimalSkeleton from "@/components/UI/Skeletons/AnimalSkeleton/AnimalSkeleton";
-import { fetchAnimalById } from "@/services/Animals/Animal";
 import styles from "./page.module.css";
 
 const mockAnimal = {
@@ -42,8 +41,8 @@ export default function AnimalProfile() {
   const params = useParams();
   const router = useRouter();
   const animalId = params.id as string;
-  const [animal, setAnimal] = useState<any>(null);
-  const [ong, setOng] = useState<any>(null);
+  const [animal, setAnimal] = useState<typeof mockAnimal | null>(null);
+  const [ong, setOng] = useState<typeof mockOng | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -70,7 +69,7 @@ export default function AnimalProfile() {
     if (animalId) {
       loadAnimal();
     }
-  }, [animalId]);
+  }, [animalId, router]);
 
   if (loading) {
     return <AnimalSkeleton />;

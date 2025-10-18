@@ -67,13 +67,21 @@ const speciesOptions: FilterOption[] = [
 ];
 
 const CloseAnimalsFeed = () => {
-  const [animals, setAnimals] = useState<any[]>([]);
+  const [animals, setAnimals] = useState<Array<{
+    uuid: string;
+    nome: string;
+    sexo: "M" | "F";
+    idade: number;
+    raca: string;
+    especie: string;
+    fotos?: Array<{ url: string }>;
+    ong?: { bairro?: string; cidade?: string };
+  }>>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMoreData, setHasMoreData] = useState(true);
-  const [totalAnimals, setTotalAnimals] = useState(0);
   const [filters, setFilters] = useState<Filters>({
     idade: "",
     sexo: "",
@@ -90,7 +98,7 @@ const CloseAnimalsFeed = () => {
           setLoadingMore(true);
         }
 
-        const { animals: newAnimals, pagination } = await fetchAnimals(
+        const { animals: newAnimals } = await fetchAnimals(
           page,
           10
         );
@@ -103,7 +111,6 @@ const CloseAnimalsFeed = () => {
           }
         });
 
-        setTotalAnimals(pagination.total);
         setHasMoreData(newAnimals.length > 0);
       } catch (error) {
         console.error("Failed to fetch animals:", error);
@@ -128,7 +135,7 @@ const CloseAnimalsFeed = () => {
 
   useEffect(() => {
     loadAnimals(1, true);
-  }, []);
+  }, [loadAnimals]);
 
   useEffect(() => {
     if (currentPage > 1) {
@@ -293,7 +300,7 @@ const CloseAnimalsFeed = () => {
               key={animal.uuid}
               id={animal.uuid}
               nome={animal.nome}
-              image={animal.fotos?.[0]?.url}
+              image={animal.fotos?.[0]?.url || ""}
               sexo={animal.sexo}
               idade={animal.idade}
               raca={animal.raca}

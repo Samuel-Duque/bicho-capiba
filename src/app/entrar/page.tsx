@@ -19,12 +19,6 @@ export default function LoginPage() {
   const { login, logout, isLoading, isAuthenticated } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      logout();
-    }
-  }, [isAuthenticated, logout]);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -33,16 +27,15 @@ export default function LoginPage() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setError(null);
 
     try {
       await login(formData);
       router.push("/");
-    } catch (err: any) {
+    } catch (err: unknown) {
       const customErrorMessages = {
-        401: "E-mail ou senha estão incorretos."
+        401: "E-mail ou senha estão incorretos.",
       };
       const errorState = handleApiError(err, customErrorMessages);
       setError(errorState);

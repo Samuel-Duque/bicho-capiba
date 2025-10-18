@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       const userData = await me();
       setUser(userData);
-    } catch (error) {
+    } catch {
       setUser(null);
     } finally {
       setIsLoading(false);

@@ -19,11 +19,16 @@ interface Animal {
 }
 
 interface AnimalHeroProps {
-  animal: Animal;
+  animal: Animal | null;
 }
 
 export default function AnimalHero({ animal }: AnimalHeroProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  if (!animal) {
+    return null;
+  }
+
   const { nome, images } = animal;
 
   const nextImage = () => {

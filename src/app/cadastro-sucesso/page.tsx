@@ -3,11 +3,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import Button from "@/components/UI/Button/Button";
 import { FaArrowRight } from "react-icons/fa";
 import styles from "./page.module.css";
 
-export default function CadastroSucesso() {
+function CadastroSucessoContent() {
   const searchParams = useSearchParams();
   const nomeOng = searchParams.get("nome") || "ONG";
   return (
@@ -52,5 +53,13 @@ export default function CadastroSucesso() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CadastroSucesso() {
+  return (
+    <Suspense fallback={<div>Carregando...</div>}>
+      <CadastroSucessoContent />
+    </Suspense>
   );
 }

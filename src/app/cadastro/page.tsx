@@ -1,21 +1,26 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import Button from "@/components/UI/Button/Button";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { validateUserSignupForm, UserSignupFormData } from "@/validators/auth/userSignup";
+import {
+  validateUserSignupForm,
+  UserSignupFormData,
+} from "@/validators/auth/userSignup";
 import { useAuth } from "@/contexts/AuthContext";
+import { getApiInstance } from "@/hooks/Api";
+import { handleApiError, ErrorState } from "@/utils/ErrorHandler";
 import styles from "./page.module.css";
 
 export default function SignupPage() {
-  const { logout, isAuthenticated } = useAuth();
+  const { setUser, logout, isAuthenticated } = useAuth();
+  const router = useRouter();
   const [formData, setFormData] = useState<UserSignupFormData>({
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
     password: "",
     confirmPassword: "",
     agreeToTerms: false,
@@ -24,12 +29,7 @@ export default function SignupPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      logout();
-    }
-  }, [isAuthenticated, logout]);
+  const [apiError, setApiError] = useState<ErrorState | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -44,6 +44,10 @@ export default function SignupPage() {
         [name]: "",
       }));
     }
+
+    if (apiError) {
+      setApiError(null);
+    }
   };
 
   const validateForm = () => {
@@ -52,19 +56,43 @@ export default function SignupPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     if (!validateForm()) {
       return;
     }
 
     setIsLoading(true);
+    setApiError(null);
 
     try {
-      console.log("Signup attempt:", formData);
+      const api = getApiInstance();
+      const submitData = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+      };
+
+      const response = await api.post("/users", submitData);
+
+      if (response.data.status === "OK" && response.data.result) {
+        const userData = {
+          id: response.data.result.uuid,
+          fullName: `${response.data.result.firstName} ${response.data.result.lastName}`,
+          email: response.data.result.email,
+        };
+
+        setUser(userData);
+        router.push(
+          `/cadastro-sucesso?nome=${encodeURIComponent(formData.firstName)}`
+        );
+      }
     } catch (error) {
-      console.error("Signup error:", error);
+      const errorState = handleApiError(error, {
+        409: "Uma conta com este e-mail já está cadastrada.",
+        422: "Dados inválidos. Verifique os campos e tente novamente.",
+      });
+      setApiError(errorState);
     } finally {
       setIsLoading(false);
     }
@@ -82,6 +110,7 @@ export default function SignupPage() {
         </div>
 
         <form onSubmit={handleSubmit} className={styles.form}>
+          {apiError && <div className={styles.error}>{apiError.message}</div>}
           <div className={styles.nameRow}>
             <div className={styles.inputGroup}>
               <label htmlFor="firstName">Nome *</label>
@@ -130,18 +159,6 @@ export default function SignupPage() {
             {errors.email && (
               <span className={styles.error}>{errors.email}</span>
             )}
-          </div>
-
-          <div className={styles.inputGroup}>
-            <label htmlFor="phone">Telefone (opcional)</label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              placeholder="(11) 99999-9999"
-            />
           </div>
 
           <div className={styles.inputGroup}>
@@ -224,7 +241,7 @@ export default function SignupPage() {
             color="green"
             size="large"
             disabled={isLoading}
-            onClick={() => {}}
+            onClick={handleSubmit}
           >
             {isLoading ? "Criando conta..." : "Criar conta"}
           </Button>

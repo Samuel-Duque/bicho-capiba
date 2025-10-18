@@ -16,6 +16,7 @@ export const useIntersectionObserver = ({
   useEffect(() => {
     if (!enabled) return;
 
+    const currentElement = targetRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -25,13 +26,13 @@ export const useIntersectionObserver = ({
       { threshold }
     );
 
-    if (targetRef.current) {
-      observer.observe(targetRef.current);
+    if (currentElement) {
+      observer.observe(currentElement);
     }
 
     return () => {
-      if (targetRef.current) {
-        observer.unobserve(targetRef.current);
+      if (currentElement) {
+        observer.unobserve(currentElement);
       }
     };
   }, [onIntersect, threshold, enabled]);

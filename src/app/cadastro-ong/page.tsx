@@ -63,12 +63,6 @@ export default function OngSignupPage() {
   const [isLoadingCnpj, setIsLoadingCnpj] = useState(false);
   const [isValidCnpj, setIsValidCnpj] = useState<boolean | null>(null);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      logout();
-    }
-  }, [isAuthenticated, logout]);
-
   const formatPhone = (value: string) => {
     const numbers = value.replace(/\D/g, "");
     if (numbers.length <= 2) return `(${numbers}`;
@@ -130,12 +124,18 @@ export default function OngSignupPage() {
       } else {
         setIsValidCnpj(false);
       }
-    } catch (error) {
-      if (error.name === "AbortError") {
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name === "AbortError") {
         console.error("CNPJ request timeout");
         setIsValidCnpj(null);
-      } else if (error.response?.status === 400) {
-        setIsValidCnpj(false);
+      } else if (error && typeof error === "object" && "response" in error) {
+        const axiosError = error as { response?: { status: number } };
+        if (axiosError.response?.status === 400) {
+          setIsValidCnpj(false);
+        } else {
+          console.error("Erro ao buscar CNPJ:", error);
+          setIsValidCnpj(null);
+        }
       } else {
         console.error("Erro ao buscar CNPJ:", error);
         setIsValidCnpj(null);
@@ -171,8 +171,8 @@ export default function OngSignupPage() {
           estado: state || "",
         }));
       }
-    } catch (error) {
-      if (error.name === "AbortError") {
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name === "AbortError") {
         console.error("CEP request timeout");
       } else {
         console.error("Erro ao buscar CEP:", error);
@@ -188,7 +188,7 @@ export default function OngSignupPage() {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
 
-    let processedValue: any = value;
+    let processedValue: string | number | boolean = value;
 
     if (name === "telefone") {
       processedValue = formatPhone(value);
@@ -243,9 +243,7 @@ export default function OngSignupPage() {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     if (!validateStep(currentStep)) {
       return;
     }
@@ -283,7 +281,9 @@ export default function OngSignupPage() {
         };
 
         setUser(userData);
-        router.push(`/cadastro-sucesso?nome=${encodeURIComponent(formData.name)}`);
+        router.push(
+          `/cadastro-sucesso?nome=${encodeURIComponent(formData.name)}`
+        );
       }
     } catch (error) {
       const errorState = handleApiError(error, {

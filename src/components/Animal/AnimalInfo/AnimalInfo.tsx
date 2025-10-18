@@ -29,12 +29,17 @@ interface Ong {
 }
 
 interface AnimalInfoProps {
-  animal: Animal;
-  ong: Ong;
+  animal: Animal | null;
+  ong: Ong | null;
 }
 
 export default function AnimalInfo({ animal, ong }: AnimalInfoProps) {
   const [showFullStory, setShowFullStory] = useState(false);
+
+  if (!animal || !ong) {
+    return null;
+  }
+
   const storyText = animal.historia || animal.descricao;
   const maxLength = 550;
   const shouldTruncate = storyText.length > maxLength;
