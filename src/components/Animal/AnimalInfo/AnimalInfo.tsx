@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LuBuilding, LuCake, LuHeartOff } from "react-icons/lu";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import ImageWithFallback from "@/components/UI/Images/ImageWithFallback";
+import AdoptionModal from "@/components/Animal/AdoptionModal/AdoptionModal";
 import styles from "./AnimalInfo.module.css";
 
 interface Animal {
@@ -31,10 +32,18 @@ interface Ong {
 interface AnimalInfoProps {
   animal: Animal | null;
   ong: Ong | null;
+  shouldOpenModal?: boolean;
 }
 
-export default function AnimalInfo({ animal, ong }: AnimalInfoProps) {
+export default function AnimalInfo({ animal, ong, shouldOpenModal = false }: AnimalInfoProps) {
   const [showFullStory, setShowFullStory] = useState(false);
+  const [isAdoptionModalOpen, setIsAdoptionModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (shouldOpenModal && animal && ong) {
+      setIsAdoptionModalOpen(true);
+    }
+  }, [shouldOpenModal, animal, ong]);
 
   if (!animal || !ong) {
     return null;
@@ -76,6 +85,7 @@ export default function AnimalInfo({ animal, ong }: AnimalInfoProps) {
 
           <button
             className={`${styles.adoptButton} ${styles.adoptButtonMobile}`}
+            onClick={() => setIsAdoptionModalOpen(true)}
           >
             Quero adotar {animal.sexo === "M" ? "o" : "a"} {animal.nome}
           </button>
@@ -103,6 +113,7 @@ export default function AnimalInfo({ animal, ong }: AnimalInfoProps) {
         <div className={styles.rightColumn}>
           <button
             className={`${styles.adoptButton} ${styles.adoptButtonDesktop}`}
+            onClick={() => setIsAdoptionModalOpen(true)}
           >
             Quero adotar {animal.sexo === "M" ? "o" : "a"} {animal.nome}
           </button>
@@ -142,6 +153,12 @@ export default function AnimalInfo({ animal, ong }: AnimalInfoProps) {
           </div>
         </div>
       </div>
+
+      <AdoptionModal
+        isOpen={isAdoptionModalOpen}
+        onClose={() => setIsAdoptionModalOpen(false)}
+        animal={animal}
+      />
     </section>
   );
 }

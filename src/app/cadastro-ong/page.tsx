@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Button from "@/components/UI/Button/Button";
+import Error from "@/components/UI/Error/Error";
 import {
   FaEye,
   FaEyeSlash,
@@ -12,13 +13,13 @@ import {
   FaArrowRight,
   FaCheck,
 } from "react-icons/fa";
-import { getApiInstance } from "@/hooks/Api";
 import { handleApiError, ErrorState } from "@/utils/ErrorHandler";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   validateOngSignupStep,
   OngSignupFormData,
 } from "@/validators/auth/ongSignup";
+import { validateCnpj, fetchCepData } from "@/services/Helpers/Helpers";
 import styles from "./page.module.css";
 
 const steps = [
@@ -33,7 +34,7 @@ const steps = [
 
 export default function OngSignupPage() {
   const [currentStep, setCurrentStep] = useState(1);
-  const { setUser, logout, isAuthenticated } = useAuth();
+  const { signupOng, isLoading, isAuthenticated } = useAuth();
   const router = useRouter();
   const [formData, setFormData] = useState<OngSignupFormData>({
     name: "",
@@ -56,7 +57,6 @@ export default function OngSignupPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [apiError, setApiError] = useState<ErrorState | null>(null);
   const [isLoadingCep, setIsLoadingCep] = useState(false);
@@ -105,20 +105,17 @@ export default function OngSignupPage() {
     setIsLoadingCnpj(true);
     setIsValidCnpj(null);
     try {
-      const api = getApiInstance();
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-      const response = await api.get(`/helpers/cnpj/${cleanCnpj}`, {
-        signal: controller.signal,
-      });
+      const response = await validateCnpj(cleanCnpj);
 
       clearTimeout(timeoutId);
 
       if (
-        response.data &&
-        response.data.status === "OK" &&
-        response.data.result === true
+        response &&
+        response.status === "OK" &&
+        response.result === true
       ) {
         setIsValidCnpj(true);
       } else {
@@ -145,24 +142,21 @@ export default function OngSignupPage() {
     }
   };
 
-  const fetchCepData = async (cep: string) => {
+  const handleFetchCepData = async (cep: string) => {
     const cleanCep = cep.replace(/\D/g, "");
     if (cleanCep.length !== 8) return;
 
     setIsLoadingCep(true);
     try {
-      const api = getApiInstance();
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-      const response = await api.get(`/helpers/cep/${cleanCep}`, {
-        signal: controller.signal,
-      });
+      const response = await fetchCepData(cleanCep);
 
       clearTimeout(timeoutId);
 
-      if (response.data.status === "OK" && response.data.result) {
-        const { city, neighborhood, street, state } = response.data.result;
+      if (response.status === "OK" && response.result) {
+        const { city, neighborhood, street, state } = response.result;
         setFormData((prev) => ({
           ...prev,
           cidade: city || "",
@@ -219,7 +213,7 @@ export default function OngSignupPage() {
     }
 
     if (name === "CEP" && value.replace(/\D/g, "").length === 8) {
-      fetchCepData(value);
+      handleFetchCepData(value);
     }
 
     if (name === "cnpj" && value.replace(/\D/g, "").length === 14) {
@@ -248,11 +242,9 @@ export default function OngSignupPage() {
       return;
     }
 
-    setIsLoading(true);
     setApiError(null);
 
     try {
-      const api = getApiInstance();
       const submitData = {
         name: formData.name,
         cnpj: formData.cnpj.replace(/\D/g, ""),
@@ -271,28 +263,16 @@ export default function OngSignupPage() {
         password: formData.password,
       };
 
-      const response = await api.post("/ongs", submitData);
-
-      if (response.data.status === "OK" && response.data.result) {
-        const userData = {
-          id: response.data.result.uuid,
-          fullName: response.data.result.nome,
-          email: response.data.result.email,
-        };
-
-        setUser(userData);
-        router.push(
-          `/cadastro-sucesso?nome=${encodeURIComponent(formData.name)}`
-        );
-      }
+      await signupOng(submitData);
+      router.push(
+        `/cadastro-sucesso?nome=${encodeURIComponent(formData.name)}`
+      );
     } catch (error) {
       const errorState = handleApiError(error, {
         409: "Uma ONG com este CNPJ ou e-mail já está cadastrada.",
         422: "Dados inválidos. Verifique os campos e tente novamente.",
       });
       setApiError(errorState);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -712,9 +692,7 @@ export default function OngSignupPage() {
             ))}
           </div>
 
-          {apiError && (
-            <div className={styles.apiError}>{apiError.message}</div>
-          )}
+          <Error error={apiError} />
 
           <form onSubmit={handleSubmit} className={styles.form}>
             {renderStepContent()}

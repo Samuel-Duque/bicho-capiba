@@ -1,13 +1,22 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { User, LoginData, login, me, logout } from "@/services/Auth/Auth";
+import { User, LoginData, SignupData, OngSignupData, login, signup, signupOng, me, logout } from "@/services/Auth/Auth";
+
+interface UserSignupInput {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (data: LoginData) => Promise<void>;
+  signup: (data: UserSignupInput) => Promise<User>;
+  signupOng: (data: OngSignupData) => Promise<User>;
   logout: () => Promise<void>;
   setUser: (user: User) => void;
 }
@@ -48,6 +57,33 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const handleSignup = async (data: UserSignupInput): Promise<User> => {
+    setIsLoading(true);
+    try {
+      const signupData: SignupData = {
+        fullName: `${data.firstName} ${data.lastName}`,
+        email: data.email,
+        password: data.password,
+      };
+      const response = await signup(signupData);
+      setUser(response.user);
+      return response.user;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignupOng = async (data: OngSignupData): Promise<User> => {
+    setIsLoading(true);
+    try {
+      const response = await signupOng(data);
+      setUser(response.user);
+      return response.user;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleLogout = async () => {
     setIsLoading(true);
     try {
@@ -65,6 +101,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         isLoading,
         isAuthenticated: !!user,
         login: handleLogin,
+        signup: handleSignup,
+        signupOng: handleSignupOng,
         logout: handleLogout,
         setUser,
       }}

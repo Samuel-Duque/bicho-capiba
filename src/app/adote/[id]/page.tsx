@@ -3,7 +3,7 @@
 export const runtime = 'edge';
 
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import AnimalHero from "@/components/Animal/AnimalHero/AnimalHero";
 import AnimalInfo from "@/components/Animal/AnimalInfo/AnimalInfo";
 import AnimalSkeleton from "@/components/UI/Skeletons/AnimalSkeleton/AnimalSkeleton";
@@ -91,7 +91,9 @@ const transformApiData = (apiData: ApiAnimal): { animal: Animal; ong: Ong } => {
 export default function AnimalProfile() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const animalId = params.id as string;
+  const isRedirected = searchParams.get('redirected') === 'true';
   const [animal, setAnimal] = useState<Animal | null>(null);
   const [ong, setOng] = useState<Ong | null>(null);
   const [loading, setLoading] = useState(true);
@@ -125,7 +127,7 @@ export default function AnimalProfile() {
   return (
     <div className={styles.page}>
       <AnimalHero animal={animal} />
-      <AnimalInfo animal={animal} ong={ong} />
+      <AnimalInfo animal={animal} ong={ong} shouldOpenModal={isRedirected} />
     </div>
   );
 }
