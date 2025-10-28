@@ -8,6 +8,7 @@ import Error from "@/components/UI/Error/Error";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuth } from "@/contexts/AuthContext";
 import { handleApiError, ErrorState } from "@/utils/ErrorHandler";
+import { formatUrlParam } from "@/utils/formatters";
 import styles from "./page.module.css";
 
 export default function LoginPage() {
@@ -115,7 +116,7 @@ export default function LoginPage() {
         <div className={styles.footer}>
           <p>
             Ainda não tem uma conta?{" "}
-            <Link href={`/cadastro${redirectTo ? `?redirect=${encodeURIComponent(redirectTo)}` : ""}`} className={styles.signupLink}>
+            <Link href={`/cadastro${redirectTo ? `?redirect=${formatUrlParam(redirectTo)}` : ""}`} className={styles.signupLink}>
               Cadastre-se aqui
             </Link>
           </p>

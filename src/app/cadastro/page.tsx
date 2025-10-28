@@ -12,6 +12,7 @@ import {
 } from "@/validators/auth/userSignup";
 import { useAuth } from "@/contexts/AuthContext";
 import { handleApiError, ErrorState } from "@/utils/ErrorHandler";
+import { formatUrlParam } from "@/utils/formatters";
 import styles from "./page.module.css";
 
 export default function SignupPage() {
@@ -80,7 +81,7 @@ export default function SignupPage() {
         router.push(url.pathname + url.search);
       } else {
         router.push(
-          `/cadastro-sucesso?nome=${encodeURIComponent(formData.firstName)}`
+          `/cadastro-sucesso?nome=${formatUrlParam(formData.firstName)}`
         );
       }
     } catch (error) {
@@ -244,7 +245,7 @@ export default function SignupPage() {
         <div className={styles.footer}>
           <p>
             Já tem uma conta?{" "}
-            <Link href={`/entrar${redirectTo ? `?redirect=${encodeURIComponent(redirectTo)}` : ""}`} className={styles.loginLink}>
+            <Link href={`/entrar${redirectTo ? `?redirect=${formatUrlParam(redirectTo)}` : ""}`} className={styles.loginLink}>
               Entre aqui
             </Link>
           </p>

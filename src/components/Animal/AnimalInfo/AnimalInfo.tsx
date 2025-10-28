@@ -5,6 +5,7 @@ import { LuBuilding, LuCake, LuHeartOff } from "react-icons/lu";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import ImageWithFallback from "@/components/UI/Images/ImageWithFallback";
 import AdoptionModal from "@/components/Animal/AdoptionModal/AdoptionModal";
+import { formatUrlParam } from "@/utils/formatters";
 import styles from "./AnimalInfo.module.css";
 
 interface Animal {
@@ -57,7 +58,7 @@ export default function AnimalInfo({ animal, ong, shouldOpenModal = false }: Ani
       ? storyText.substring(0, maxLength) + "..."
       : storyText;
 
-  const encodedAddress = encodeURIComponent(ong.endereco);
+  const encodedAddress = formatUrlParam(ong.endereco);
   const mapUrl = `https://maps.google.com/maps?q=${encodedAddress}&output=embed`;
 
   return (

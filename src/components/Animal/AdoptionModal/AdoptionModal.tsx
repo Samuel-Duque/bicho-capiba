@@ -10,6 +10,7 @@ import {
   FaShieldAlt,
 } from "react-icons/fa";
 import { useAuth } from "@/contexts/AuthContext";
+import { formatUrlParam } from "@/utils/formatters";
 import styles from "./AdoptionModal.module.css";
 
 interface Animal {
@@ -142,13 +143,13 @@ export default function AdoptionModal({
 
   const handleLoginRedirect = () => {
     router.push(
-      `/entrar?redirect=${encodeURIComponent(`/adote/${animal.id}`)}`
+      `/entrar?redirect=${formatUrlParam(`/adote/${animal.id}`)}`
     );
   };
 
   const handleSignupRedirect = () => {
     router.push(
-      `/cadastro?redirect=${encodeURIComponent(`/adote/${animal.id}`)}`
+      `/cadastro?redirect=${formatUrlParam(`/adote/${animal.id}`)}`
     );
   };
 

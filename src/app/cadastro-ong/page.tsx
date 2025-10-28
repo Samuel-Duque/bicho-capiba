@@ -20,6 +20,7 @@ import {
   OngSignupFormData,
 } from "@/validators/auth/ongSignup";
 import { validateCnpj, fetchCepData } from "@/services/Helpers/Helpers";
+import { formatPhone, formatCnpj, formatUrlParam } from "@/utils/formatters";
 import styles from "./page.module.css";
 
 const steps = [
@@ -63,40 +64,6 @@ export default function OngSignupPage() {
   const [isLoadingCnpj, setIsLoadingCnpj] = useState(false);
   const [isValidCnpj, setIsValidCnpj] = useState<boolean | null>(null);
 
-  const formatPhone = (value: string) => {
-    const numbers = value.replace(/\D/g, "");
-    if (numbers.length <= 2) return `(${numbers}`;
-    if (numbers.length <= 7)
-      return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
-    if (numbers.length <= 11)
-      return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(
-        7
-      )}`;
-    return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(
-      7,
-      11
-    )}`;
-  };
-
-  const formatCnpj = (value: string) => {
-    const numbers = value.replace(/\D/g, "");
-    if (numbers.length <= 2) return numbers;
-    if (numbers.length <= 5)
-      return `${numbers.slice(0, 2)}.${numbers.slice(2)}`;
-    if (numbers.length <= 8)
-      return `${numbers.slice(0, 2)}.${numbers.slice(2, 5)}.${numbers.slice(
-        5
-      )}`;
-    if (numbers.length <= 12)
-      return `${numbers.slice(0, 2)}.${numbers.slice(2, 5)}.${numbers.slice(
-        5,
-        8
-      )}/${numbers.slice(8)}`;
-    return `${numbers.slice(0, 2)}.${numbers.slice(2, 5)}.${numbers.slice(
-      5,
-      8
-    )}/${numbers.slice(8, 12)}-${numbers.slice(12, 14)}`;
-  };
 
   const fetchCnpjData = async (cnpj: string) => {
     const cleanCnpj = cnpj.replace(/\D/g, "");
@@ -265,7 +232,7 @@ export default function OngSignupPage() {
 
       await signupOng(submitData);
       router.push(
-        `/cadastro-sucesso?nome=${encodeURIComponent(formData.name)}`
+        `/cadastro-sucesso?nome=${formatUrlParam(formData.name)}`
       );
     } catch (error) {
       const errorState = handleApiError(error, {
