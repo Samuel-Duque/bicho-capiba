@@ -11,6 +11,9 @@ import {
 } from "react-icons/fa";
 import { useAuth } from "@/contexts/AuthContext";
 import { formatUrlParam } from "@/utils/formatters";
+import { getApiInstance } from "@/hooks/Api";
+import { handleApiError, ErrorState } from "@/utils/ErrorHandler";
+import Error from "@/components/UI/Error/Error";
 import styles from "./AdoptionModal.module.css";
 
 interface Animal {
@@ -56,7 +59,7 @@ export default function AdoptionModal({
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<
-    "auth" | "explanation" | "form"
+    "auth" | "explanation" | "form" | "success"
   >("auth");
   const [formData, setFormData] = useState<FormData>({
     tipoResidencia: "",
@@ -83,22 +86,16 @@ export default function AdoptionModal({
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
+  const [error, setError] = useState<ErrorState | null>(null);
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
       if (isAuthenticated) {
         setCurrentStep("explanation");
       } else {
         setCurrentStep("auth");
       }
-    } else {
-      document.body.style.overflow = "unset";
     }
-
-    return () => {
-      document.body.style.overflow = "unset";
-    };
   }, [isOpen, isAuthenticated]);
 
   useEffect(() => {
@@ -126,13 +123,12 @@ export default function AdoptionModal({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
-
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
+
 
   const handleInputChange = (field: keyof FormData, value: any) => {
     setFormData((prev) => ({
@@ -142,30 +138,32 @@ export default function AdoptionModal({
   };
 
   const handleLoginRedirect = () => {
-    router.push(
-      `/entrar?redirect=${formatUrlParam(`/adote/${animal.id}`)}`
-    );
+    router.push(`/entrar?redirect=${formatUrlParam(`/adote/${animal.id}`)}`);
   };
 
   const handleSignupRedirect = () => {
-    router.push(
-      `/cadastro?redirect=${formatUrlParam(`/adote/${animal.id}`)}`
-    );
+    router.push(`/cadastro?redirect=${formatUrlParam(`/adote/${animal.id}`)}`);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
 
     try {
-      console.log("Dados de adoção:", formData);
+      const api = getApiInstance();
+      await api.post("/adoptions", {
+        animalId: animal.id,
+        ...formData,
+      });
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      alert(`Solicitação de adoção para ${animal.nome} enviada com sucesso!`);
-      onClose();
+      setCurrentStep("success");
     } catch (error) {
-      alert("Erro ao enviar solicitação. Tente novamente.");
+      const errorState = handleApiError(error, {
+        400: "Verifique os campos preenchidos e tente novamente.",
+        422: "Alguns campos são obrigatórios. Verifique e tente novamente.",
+      });
+      setError(errorState);
     } finally {
       setIsSubmitting(false);
     }
@@ -217,6 +215,40 @@ export default function AdoptionModal({
     </div>
   );
 
+  const renderSuccessStep = () => (
+    <div className={styles.successContent}>
+      <div className={styles.successIcon}>
+        <FaHeart />
+      </div>
+      <h2 className={styles.successTitle}>Solicitação Enviada!</h2>
+      <div className={styles.successText}>
+        <p>
+          Sua solicitação de adoção para {animal.sexo === "M" ? "o" : "a"}{" "}
+          <strong>{animal.nome}</strong> foi enviada com sucesso!
+        </p>
+        <p>
+          A ONG responsável irá analisar sua solicitação e entrará em contato
+          com você em breve através do email cadastrado.
+        </p>
+        <p>
+          <strong>Próximos passos:</strong>
+        </p>
+        <ul className={styles.successList}>
+          <li>Aguarde o contato da ONG</li>
+          <li>Prepare a documentação solicitada</li>
+          <li>Agende uma visita se aprovado</li>
+        </ul>
+      </div>
+      <button
+        type="button"
+        className={styles.successButton}
+        onClick={onClose}
+      >
+        Entendi
+      </button>
+    </div>
+  );
+
   const renderExplanationStep = () => (
     <div className={styles.explanationContent}>
       <div className={styles.explanationTitleContainer}>
@@ -236,7 +268,7 @@ export default function AdoptionModal({
         <ul className={styles.explanationList}>
           <li>Garantir que {animal.nome} terá um lar seguro e adequado</li>
           <li>Assegurar a compatibilidade entre o animal e sua família</li>
-          <li>Proteger tanto o animal quanto o futuro tutor</li>
+          <li>Proteger tanto o animal quanto você</li>
           <li>Cumprir as diretrizes de adoção responsável da ONG</li>
         </ul>
         <p>
@@ -717,6 +749,8 @@ export default function AdoptionModal({
         </div>
       </div>
 
+      {error && <Error error={error} />}
+
       <div className={styles.actions}>
         <button
           type="button"
@@ -737,6 +771,8 @@ export default function AdoptionModal({
     </form>
   );
 
+  if (!isOpen) return null;
+
   return (
     <div className={styles.backdrop} onClick={handleBackdropClick}>
       <div
@@ -747,23 +783,9 @@ export default function AdoptionModal({
         {currentStep === "auth" ? (
           renderAuthStep()
         ) : currentStep === "explanation" ? (
-          <>
-            <div className={styles.header}>
-              <div className={styles.titleContainer}>
-                <h2 className={styles.title}>
-                  Adotar {animal.sexo === "M" ? "o" : "a"} {animal.nome}
-                </h2>
-              </div>
-              <button
-                className={styles.closeButton}
-                onClick={onClose}
-                type="button"
-              >
-                <IoClose />
-              </button>
-            </div>
-            {renderExplanationStep()}
-          </>
+          renderExplanationStep()
+        ) : currentStep === "success" ? (
+          renderSuccessStep()
         ) : (
           <>
             <div className={styles.header}>

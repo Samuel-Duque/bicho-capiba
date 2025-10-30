@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { User, LoginData, SignupData, OngSignupData, login, signup, signupOng, me, logout } from "@/services/Auth/Auth";
+import { AuthUser, LoginData, SignupData, OngSignupData, login, signup, signupOng, me, logout } from "@/services/Auth/Auth";
 
 interface UserSignupInput {
   firstName: string;
@@ -11,14 +11,15 @@ interface UserSignupInput {
 }
 
 interface AuthContextType {
-  user: User | null;
+  user: AuthUser | null;
   isLoading: boolean;
   isAuthenticated: boolean;
+  isOng: boolean;
   login: (data: LoginData) => Promise<void>;
-  signup: (data: UserSignupInput) => Promise<User>;
-  signupOng: (data: OngSignupData) => Promise<User>;
+  signup: (data: UserSignupInput) => Promise<AuthUser>;
+  signupOng: (data: OngSignupData) => Promise<AuthUser>;
   logout: () => Promise<void>;
-  setUser: (user: User) => void;
+  setUser: (user: AuthUser) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,8 +29,10 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const isOng = user ? 'cnpj' in user : false;
 
   const checkAuth = async () => {
     try {
@@ -57,7 +60,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const handleSignup = async (data: UserSignupInput): Promise<User> => {
+  const handleSignup = async (data: UserSignupInput): Promise<AuthUser> => {
     setIsLoading(true);
     try {
       const signupData: SignupData = {
@@ -73,7 +76,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const handleSignupOng = async (data: OngSignupData): Promise<User> => {
+  const handleSignupOng = async (data: OngSignupData): Promise<AuthUser> => {
     setIsLoading(true);
     try {
       const response = await signupOng(data);
@@ -100,6 +103,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         user,
         isLoading,
         isAuthenticated: !!user,
+        isOng,
         login: handleLogin,
         signup: handleSignup,
         signupOng: handleSignupOng,

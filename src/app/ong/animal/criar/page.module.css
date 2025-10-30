@@ -1,0 +1,482 @@
+.container {
+  min-height: 100vh;
+  background: var(--background-secondary);
+  padding-bottom: 2rem;
+}
+
+.main {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--orange-capiba);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+  transition: opacity 0.2s ease;
+}
+
+.backButton:hover {
+  opacity: 0.8;
+}
+
+.pageHeader {
+  text-align: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+  font-family: var(--title-font);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-color);
+  font-weight: 400;
+}
+
+.formContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.formGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: var(--background);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.cardIcon {
+  color: var(--orange-capiba);
+  flex-shrink: 0;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin: 0;
+  font-family: var(--title-font);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inputRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.input,
+.textarea {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--foreground);
+  background: var(--background);
+  transition: all 0.2s ease;
+  font-family: var(--body-font);
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--orange-capiba);
+  box-shadow: 0 0 0 3px rgba(221, 67, 25, 0.1);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #999;
+}
+
+.inputWithError {
+  border-color: #ef4444;
+}
+
+.inputWithError:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.inputError {
+  font-size: 0.85rem;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.checkboxGroup {
+  display: flex;
+  align-items: center;
+}
+
+.checkboxRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.dropdownWithError {
+  border-color: #ef4444 !important;
+}
+
+.dropdownWithError .trigger {
+  border-color: #ef4444 !important;
+}
+
+.dropdownWithError .trigger:focus {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.vacinasGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.vacinaOption {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.vacinaOption:hover {
+  background: var(--background-secondary);
+}
+
+.vacinaText {
+  font-size: 0.9rem;
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.radioGroup {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.radioOption {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.radio {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--orange-capiba);
+  cursor: pointer;
+}
+
+.radioText {
+  font-size: 0.9rem;
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.sociabilityGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--foreground);
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--orange-capiba);
+  cursor: pointer;
+}
+
+.checkboxText {
+  font-weight: 500;
+}
+
+.imagesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.imagePreview {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #e5e5e5;
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.removeImageButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.removeImageButton:hover {
+  background: #ef4444;
+}
+
+.addImageButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 120px;
+  height: 120px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  background: var(--background);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.addImageButton:hover {
+  border-color: var(--orange-capiba);
+  color: var(--orange-capiba);
+}
+
+.fileInput {
+  display: none;
+}
+
+.imageHelp {
+  font-size: 0.85rem;
+  color: var(--text-color);
+  margin-top: 0.5rem;
+}
+
+.footer {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+.footerActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.cancelButton {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  color: var(--text-color);
+  border: 2px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--body-font);
+}
+
+.cancelButton:hover:not(:disabled) {
+  border-color: var(--text-color);
+  color: var(--foreground);
+}
+
+.cancelButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.saveButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--orange-capiba);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--body-font);
+}
+
+.saveButton:hover:not(:disabled) {
+  background: #c23a17;
+  transform: translateY(-1px);
+}
+
+.saveButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 1rem;
+  color: var(--text-color);
+}
+
+.loadingSpinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid var(--orange-capiba);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.errorBanner {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 1rem 0.5rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  .inputRow,
+  .checkboxRow {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .footerActions {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+
+  .cancelButton,
+  .saveButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .imagesContainer {
+    justify-content: center;
+  }
+
+
+  .vacinasGrid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .radioGroup {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .sociabilityGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}

@@ -1,11 +1,40 @@
 import { getApiInstance } from "@/hooks/Api";
 
-export interface User {
-  id: string;
-  fullName: string;
+export interface BaseUser {
+  uuid: string;
   email: string;
-  avatar?: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
 }
+
+export interface User extends BaseUser {
+  fullName: string;
+  dataNascimento?: string | null;
+  endereco?: string | null;
+  telefone?: string | null;
+  superUser: boolean;
+}
+
+export interface Ong extends BaseUser {
+  nome: string;
+  cnpj: string;
+  telefone: string;
+  descricao: string;
+  bairro: string;
+  rua: string;
+  numero: string;
+  cidade: string;
+  estado: string;
+  complemento?: string;
+  cep?: string;
+  quantidadeAnimais: number;
+  responsavelTecnico: string;
+  latitude?: number | null;
+  longitude?: number | null;
+}
+
+export type AuthUser = User | Ong;
 
 export interface LoginData {
   email: string;
@@ -37,11 +66,11 @@ export interface OngSignupData {
 }
 
 export interface SignupResponse {
-  user: User;
+  user: AuthUser;
 }
 
 export interface LoginResponse {
-  user: User;
+  user: AuthUser;
   token: string;
 }
 
@@ -52,7 +81,7 @@ export const login = async (data: LoginData): Promise<LoginResponse> => {
   return response.data;
 };
 
-export const me = async (): Promise<User> => {
+export const me = async (): Promise<AuthUser> => {
   const response = await api.get("/auth/me");
   return response.data;
 };
