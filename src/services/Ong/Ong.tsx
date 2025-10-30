@@ -19,7 +19,7 @@ export interface OngAnimal {
   sociavel_animal?: boolean;
   sociavel_pessoa?: boolean;
   images?: Array<{ id: string; url: string }>;
-  status: "Disponível" | "Em processo" | "Adotado";
+  status: "Disponível" | "Em processo" | "Em andamento" | "Adotado";
   createdAt: string;
   updatedAt: string;
 }

@@ -104,7 +104,7 @@ export default function AnimalsGrid({
             <div key={animal.id} className={styles.card}>
               <div className={styles.imageContainer}>
                 <ImageWithFallback
-                  src={animal.image}
+                  src={animal.images?.[0]?.url || ""}
                   alt={animal.nome}
                   className={styles.image}
                   fill

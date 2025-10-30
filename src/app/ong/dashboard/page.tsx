@@ -63,7 +63,7 @@ export default function Dashboard() {
 
   return (
     <div className={styles.dashboard}>
-      <DashboardHeader ongName={user.nome} />
+      <DashboardHeader ongName={'nome' in user ? user.nome : user.fullName} />
 
       <main className={styles.main}>
         <DashboardStats stats={stats} />

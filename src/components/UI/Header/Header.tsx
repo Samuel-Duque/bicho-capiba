@@ -82,7 +82,7 @@ export default function Header() {
   }, []);
 
   const displayName =
-    isOng && user && "nome" in user ? user.nome : user?.fullName;
+    isOng && user && "nome" in user ? user.nome : (user && "fullName" in user ? user.fullName : "");
   const userType = isOng ? "ONG" : "Tutor";
 
   const getRightNavItems = () => {
@@ -154,7 +154,7 @@ export default function Header() {
         {user && (
           <div className={styles.userDropdown} ref={userDropdownRef}>
             <UserImage
-              src={user.profileImage}
+              src=""
               alt={displayName}
               size="md"
               fallbackText={displayName}
@@ -241,7 +241,7 @@ export default function Header() {
                 onClick={toggleMobileUserDropdown}
               >
                 <UserImage
-                  src={user.profileImage}
+                  src=""
                   alt={displayName}
                   size="lg"
                   fallbackText={displayName}
