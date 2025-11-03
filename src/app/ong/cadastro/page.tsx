@@ -88,11 +88,11 @@ export default function OngSignupPage() {
       } else {
         setIsValidCnpj(false);
       }
-    } catch (error: any) {
-      if (error?.name === "AbortError") {
+    } catch (error) {
+      if ((error as Error)?.name === "AbortError") {
         console.error("CNPJ request timeout");
         setIsValidCnpj(null);
-      } else if (error?.response) {
+      } else if ((error as { response?: { status: number } })?.response) {
         const axiosError = error as { response?: { status: number } };
         if (axiosError.response?.status === 400) {
           setIsValidCnpj(false);
@@ -132,8 +132,8 @@ export default function OngSignupPage() {
           estado: state || "",
         }));
       }
-    } catch (error: any) {
-      if (error?.name === "AbortError") {
+    } catch (error) {
+      if ((error as Error)?.name === "AbortError") {
         console.error("CEP request timeout");
       } else {
         console.error("Erro ao buscar CEP:", error);

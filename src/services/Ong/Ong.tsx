@@ -87,7 +87,7 @@ export const fetchOngProfile = async (): Promise<OngProfile> => {
   }
 };
 
-export const updateOngProfile = async (data: any): Promise<any> => {
+export const updateOngProfile = async (data: object) => {
   try {
     const response = await api.put("/ongs", data);
     return response.data;

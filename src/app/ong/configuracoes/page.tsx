@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { updateOngProfile } from "@/services/Ong/Ong";
+import { Ong } from "@/services/Auth/Auth";
 import { fetchCepData } from "@/services/Helpers/Helpers";
 import { formatCep } from "@/utils/formatters";
 import { handleImageSelection, revokeImagePreview } from "@/utils/imageUpload";
@@ -26,7 +27,7 @@ export default function DashboardSettings() {
   const { user, isLoading, setUser } = useAuth();
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState({} as Partial<Ong>);
   const [hasChanges, setHasChanges] = useState(false);
   const [justSaved, setJustSaved] = useState(false);
   const [isLoadingCep, setIsLoadingCep] = useState(false);
@@ -43,7 +44,7 @@ export default function DashboardSettings() {
     }
 
     if (user) {
-      setFormData(user);
+      setFormData(user as Ong);
       setApiError("");
     }
   }, [user, isLoading, router]);
@@ -107,7 +108,7 @@ export default function DashboardSettings() {
 
       if (response.status === "OK" && response.result) {
         const { city, neighborhood, street, state } = response.result;
-        setFormData((prev: any) => ({
+        setFormData((prev: Partial<Ong>) => ({
           ...prev,
           cidade: city || "",
           bairro: neighborhood || "",
@@ -116,10 +117,10 @@ export default function DashboardSettings() {
         }));
         setHasChanges(true);
       }
-    } catch (error: any) {
-      if (error?.name === "AbortError") {
+    } catch (error) {
+      if ((error as Error)?.name === "AbortError") {
         setApiError("Tempo limite excedido ao buscar CEP. Tente novamente.");
-      } else if (error?.response?.status === 404) {
+      } else if ((error as { response?: { status: number } })?.response?.status === 404) {
         setApiError("CEP não encontrado. Verifique o código postal informado.");
       } else {
         setApiError(
@@ -142,7 +143,7 @@ export default function DashboardSettings() {
       processedValue = formatPhone(value);
     }
 
-    setFormData((prev: any) => ({
+    setFormData((prev: Partial<Ong>) => ({
       ...prev,
       [field]: processedValue,
     }));
@@ -248,12 +249,13 @@ export default function DashboardSettings() {
       ];
 
       Object.keys(formData).forEach((key) => {
+        const value = (formData as Record<string, any>)[key];
         if (
-          formData[key] !== undefined &&
-          formData[key] !== null &&
+          value !== undefined &&
+          value !== null &&
           !excludeFields.includes(key)
         ) {
-          multipartData.append(key, formData[key]);
+          multipartData.append(key, value);
         }
       });
 
@@ -262,12 +264,12 @@ export default function DashboardSettings() {
       setSelectedFile(null);
       setImagePreview(null);
       setJustSaved(true);
-    } catch (error: any) {
-      if (error?.response?.status === 400) {
+    } catch (error) {
+      if ((error as { response?: { status: number } })?.response?.status === 400) {
         setApiError("Dados inválidos. Verifique os campos e tente novamente.");
-      } else if (error?.response?.status === 422) {
+      } else if ((error as { response?: { status: number } })?.response?.status === 422) {
         setApiError("Verifique os campos obrigatórios.");
-      } else if (error?.response?.status === 413) {
+      } else if ((error as { response?: { status: number } })?.response?.status === 413) {
         setApiError("Imagem muito grande. O tamanho máximo é 5MB.");
       } else {
         setApiError(
@@ -281,7 +283,7 @@ export default function DashboardSettings() {
 
   const handleReset = () => {
     if (user) {
-      setFormData(user);
+      setFormData(user as Ong);
       setHasChanges(false);
       setApiError("");
       setFieldErrors({});

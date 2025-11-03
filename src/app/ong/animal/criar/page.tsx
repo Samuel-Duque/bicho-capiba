@@ -12,7 +12,7 @@ import {
   porteOptions,
   coresData,
   getRacasOptions,
-  getVacinasOptions
+  getVacinasOptions,
 } from "@/data/animalData";
 import Image from "next/image";
 import { BsGenderMale, BsGenderFemale } from "react-icons/bs";
@@ -37,28 +37,44 @@ interface ImagePreview {
 }
 
 export default function CreateAnimal() {
-  // Helper functions to transform data into dropdown format
   const getEspeciesOptions = () => {
-    return especiesData.map(especie => ({
+    return especiesData.map((especie) => ({
       value: especie.value,
       label: especie.label,
-      icon: <Image src={especie.iconSrc} alt={especie.iconAlt} width={20} height={20} />
+      icon: (
+        <Image
+          src={especie.iconSrc}
+          alt={especie.iconAlt}
+          width={20}
+          height={20}
+        />
+      ),
     }));
   };
 
   const getSexoOptions = () => {
-    return sexoData.map(sexo => ({
+    return sexoData.map((sexo) => ({
       value: sexo.value,
       label: sexo.label,
-      icon: sexo.iconType === "male" ? <BsGenderMale /> : <BsGenderFemale />
+      icon: sexo.iconType === "male" ? <BsGenderMale /> : <BsGenderFemale />,
     }));
   };
 
   const getCoresOptions = () => {
-    return coresData.map(cor => ({
+    return coresData.map((cor) => ({
       value: cor.value,
       label: cor.label,
-      icon: <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: cor.hex, border: cor.value === 'Branco' ? '1px solid #e5e5e5' : 'none' }}></div>
+      icon: (
+        <div
+          style={{
+            width: "16px",
+            height: "16px",
+            borderRadius: "50%",
+            background: cor.hex,
+            border: cor.value === "Branco" ? "1px solid #e5e5e5" : "none",
+          }}
+        ></div>
+      ),
     }));
   };
 
@@ -102,7 +118,7 @@ export default function CreateAnimal() {
 
   useEffect(() => {
     return () => {
-      imagePreviews.forEach(img => {
+      imagePreviews.forEach((img) => {
         if (img.preview) {
           revokeImagePreview(img.preview);
         }
@@ -119,14 +135,14 @@ export default function CreateAnimal() {
     }
   }, [apiError]);
 
-  const handleInputChange = (field: keyof AnimalFormData, value: any) => {
-    setFormData(prev => ({
+  const handleInputChange = (field: keyof AnimalFormData, value: string | boolean) => {
+    setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
 
     if (field === "especie") {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         raca: "",
         vacinas: "",
@@ -155,7 +171,7 @@ export default function CreateAnimal() {
     }
 
     if (fieldErrors[field]) {
-      setFieldErrors(prev => {
+      setFieldErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[field];
         return newErrors;
@@ -168,14 +184,14 @@ export default function CreateAnimal() {
   };
 
   const handleVacinaToggle = (vacina: string) => {
-    setSelectedVacinas(prev => {
+    setSelectedVacinas((prev) => {
       const newVacinas = prev.includes(vacina)
-        ? prev.filter(v => v !== vacina)
+        ? prev.filter((v) => v !== vacina)
         : [...prev, vacina];
 
-      setFormData(prevFormData => ({
+      setFormData((prevFormData) => ({
         ...prevFormData,
-        vacinas: newVacinas.join(", ")
+        vacinas: newVacinas.join(", "),
       }));
 
       return newVacinas;
@@ -186,7 +202,9 @@ export default function CreateAnimal() {
     fileInputRef.current?.click();
   };
 
-  const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const files = event.target.files;
     if (!files) return;
 
@@ -203,10 +221,10 @@ export default function CreateAnimal() {
           file: result.data.file,
         };
 
-        setImagePreviews(prev => [...prev, newImage]);
-        setFormData(prev => ({
+        setImagePreviews((prev) => [...prev, newImage]);
+        setFormData((prev) => ({
           ...prev,
-          images: [...(prev.images || []), result.data.file]
+          images: [...(prev.images || []), result.data.file],
         }));
       } else {
         setApiError(result.error.message);
@@ -215,25 +233,26 @@ export default function CreateAnimal() {
     }
 
     if (event.target) {
-      event.target.value = '';
+      event.target.value = "";
     }
   };
 
   const handleImageRemove = (imageId: string) => {
-    setImagePreviews(prev => {
-      const imageToRemove = prev.find(img => img.id === imageId);
+    setImagePreviews((prev) => {
+      const imageToRemove = prev.find((img) => img.id === imageId);
       if (imageToRemove) {
         revokeImagePreview(imageToRemove.preview);
 
-        setFormData(prevFormData => ({
+        setFormData((prevFormData) => ({
           ...prevFormData,
-          images: prevFormData.images?.filter((_, index) => {
-            const imgIndex = prev.findIndex(img => img.id === imageId);
-            return index !== imgIndex;
-          }) || []
+          images:
+            prevFormData.images?.filter((_, index) => {
+              const imgIndex = prev.findIndex((img) => img.id === imageId);
+              return index !== imgIndex;
+            }) || [],
         }));
       }
-      return prev.filter(img => img.id !== imageId);
+      return prev.filter((img) => img.id !== imageId);
     });
   };
 
@@ -276,13 +295,17 @@ export default function CreateAnimal() {
       };
 
       Object.keys(finalFormData).forEach((key) => {
-        if (key !== "images" && finalFormData[key as keyof AnimalFormData] !== undefined && finalFormData[key as keyof AnimalFormData] !== null) {
+        if (
+          key !== "images" &&
+          finalFormData[key as keyof AnimalFormData] !== undefined &&
+          finalFormData[key as keyof AnimalFormData] !== null
+        ) {
           const value = finalFormData[key as keyof AnimalFormData];
-          if (typeof value === 'boolean') {
+          if (typeof value === "boolean") {
             multipartData.append(key, value.toString());
-          } else if (typeof value === 'number') {
+          } else if (typeof value === "number") {
             multipartData.append(key, value.toString());
-          } else if (typeof value === 'string' && value.trim() !== '') {
+          } else if (typeof value === "string" && value.trim() !== "") {
             multipartData.append(key, value);
           }
         }
@@ -290,15 +313,21 @@ export default function CreateAnimal() {
 
       await createAnimal(multipartData);
       router.push("/ong/dashboard");
-    } catch (error: any) {
-      if (error?.response?.status === 400) {
+    } catch (error) {
+      const status = (error as { response?: { status: number } })?.response
+        ?.status;
+      if (status === 400) {
         setApiError("Dados inválidos. Verifique os campos e tente novamente.");
-      } else if (error?.response?.status === 422) {
+      } else if (status === 422) {
         setApiError("Verifique os campos obrigatórios.");
-      } else if (error?.response?.status === 413) {
-        setApiError("Imagens muito grandes. O tamanho máximo é 5MB por imagem.");
+      } else if (status === 413) {
+        setApiError(
+          "Imagens muito grandes. O tamanho máximo é 5MB por imagem."
+        );
       } else {
-        setApiError("Erro ao cadastrar animal. Verifique sua conexão e tente novamente.");
+        setApiError(
+          "Erro ao cadastrar animal. Verifique sua conexão e tente novamente."
+        );
       }
     } finally {
       setIsSaving(false);
@@ -309,8 +338,12 @@ export default function CreateAnimal() {
     router.push("/ong/dashboard");
   };
 
-  const availableRacas = formData.especie ? getRacasOptions(formData.especie) : [];
-  const availableVacinas = formData.especie ? getVacinasOptions(formData.especie) : [];
+  const availableRacas = formData.especie
+    ? getRacasOptions(formData.especie)
+    : [];
+  const availableVacinas = formData.especie
+    ? getVacinasOptions(formData.especie)
+    : [];
 
   if (isLoading) {
     return (
@@ -359,14 +392,18 @@ export default function CreateAnimal() {
                   <label className={styles.label}>Nome *</label>
                   <input
                     type="text"
-                    className={`${styles.input} ${fieldErrors.nome ? styles.inputWithError : ""}`}
+                    className={`${styles.input} ${
+                      fieldErrors.nome ? styles.inputWithError : ""
+                    }`}
                     value={formData.nome}
                     onChange={(e) => handleInputChange("nome", e.target.value)}
                     placeholder="Nome do animal"
                     maxLength={100}
                   />
                   {fieldErrors.nome && (
-                    <span className={styles.inputError}>{fieldErrors.nome}</span>
+                    <span className={styles.inputError}>
+                      {fieldErrors.nome}
+                    </span>
                   )}
                 </div>
 
@@ -375,14 +412,20 @@ export default function CreateAnimal() {
                     <label className={styles.label}>Idade *</label>
                     <input
                       type="number"
-                      className={`${styles.input} ${fieldErrors.idade ? styles.inputWithError : ""}`}
+                      className={`${styles.input} ${
+                        fieldErrors.idade ? styles.inputWithError : ""
+                      }`}
                       value={formData.idade}
-                      onChange={(e) => handleInputChange("idade", parseInt(e.target.value) || 0)}
+                      onChange={(e) =>
+                        handleInputChange("idade", e.target.value || "0 anos")
+                      }
                       placeholder="0"
                       min="0"
                     />
                     {fieldErrors.idade && (
-                      <span className={styles.inputError}>{fieldErrors.idade}</span>
+                      <span className={styles.inputError}>
+                        {fieldErrors.idade}
+                      </span>
                     )}
                   </div>
 
@@ -393,10 +436,14 @@ export default function CreateAnimal() {
                       onChange={(value) => handleInputChange("sexo", value)}
                       options={getSexoOptions()}
                       placeholder="Selecione o sexo"
-                      className={fieldErrors.sexo ? styles.dropdownWithError : ""}
+                      className={
+                        fieldErrors.sexo ? styles.dropdownWithError : ""
+                      }
                     />
                     {fieldErrors.sexo && (
-                      <span className={styles.inputError}>{fieldErrors.sexo}</span>
+                      <span className={styles.inputError}>
+                        {fieldErrors.sexo}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -409,10 +456,14 @@ export default function CreateAnimal() {
                       onChange={(value) => handleInputChange("especie", value)}
                       options={getEspeciesOptions()}
                       placeholder="Selecione a espécie"
-                      className={fieldErrors.especie ? styles.dropdownWithError : ""}
+                      className={
+                        fieldErrors.especie ? styles.dropdownWithError : ""
+                      }
                     />
                     {fieldErrors.especie && (
-                      <span className={styles.inputError}>{fieldErrors.especie}</span>
+                      <span className={styles.inputError}>
+                        {fieldErrors.especie}
+                      </span>
                     )}
                   </div>
 
@@ -422,11 +473,19 @@ export default function CreateAnimal() {
                       value={formData.raca}
                       onChange={(value) => handleInputChange("raca", value)}
                       options={availableRacas}
-                      placeholder={formData.especie ? "Selecione a raça" : "Selecione primeiro a espécie"}
-                      className={fieldErrors.raca ? styles.dropdownWithError : ""}
+                      placeholder={
+                        formData.especie
+                          ? "Selecione a raça"
+                          : "Selecione primeiro a espécie"
+                      }
+                      className={
+                        fieldErrors.raca ? styles.dropdownWithError : ""
+                      }
                     />
                     {fieldErrors.raca && (
-                      <span className={styles.inputError}>{fieldErrors.raca}</span>
+                      <span className={styles.inputError}>
+                        {fieldErrors.raca}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -490,7 +549,9 @@ export default function CreateAnimal() {
                       type="date"
                       className={styles.input}
                       value={formData.data_nascimento || ""}
-                      onChange={(e) => handleInputChange("data_nascimento", e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("data_nascimento", e.target.value)
+                      }
                     />
                   </div>
                 </div>
@@ -551,7 +612,12 @@ export default function CreateAnimal() {
                   <textarea
                     className={styles.textarea}
                     value={formData.necessidades_especiais || ""}
-                    onChange={(e) => handleInputChange("necessidades_especiais", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange(
+                        "necessidades_especiais",
+                        e.target.value
+                      )
+                    }
                     placeholder="Descreva necessidades especiais, se houver..."
                     rows={3}
                     maxLength={200}
@@ -573,20 +639,28 @@ export default function CreateAnimal() {
                       <input
                         type="checkbox"
                         checked={formData.sociavel_animal || false}
-                        onChange={(e) => handleInputChange("sociavel_animal", e.target.checked)}
+                        onChange={(e) =>
+                          handleInputChange("sociavel_animal", e.target.checked)
+                        }
                         className={styles.checkbox}
                       />
-                      <span className={styles.checkboxText}>Sociável com animais</span>
+                      <span className={styles.checkboxText}>
+                        Sociável com animais
+                      </span>
                     </label>
 
                     <label className={styles.checkboxLabel}>
                       <input
                         type="checkbox"
                         checked={formData.sociavel_pessoa || false}
-                        onChange={(e) => handleInputChange("sociavel_pessoa", e.target.checked)}
+                        onChange={(e) =>
+                          handleInputChange("sociavel_pessoa", e.target.checked)
+                        }
                         className={styles.checkbox}
                       />
-                      <span className={styles.checkboxText}>Sociável com pessoas</span>
+                      <span className={styles.checkboxText}>
+                        Sociável com pessoas
+                      </span>
                     </label>
                   </div>
                 </div>
@@ -596,7 +670,9 @@ export default function CreateAnimal() {
                   <textarea
                     className={styles.textarea}
                     value={formData.historia || ""}
-                    onChange={(e) => handleInputChange("historia", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("historia", e.target.value)
+                    }
                     placeholder="Conte a história do animal..."
                     rows={4}
                     maxLength={500}
@@ -614,7 +690,11 @@ export default function CreateAnimal() {
                 <div className={styles.imagesContainer}>
                   {imagePreviews.map((image) => (
                     <div key={image.id} className={styles.imagePreview}>
-                      <img src={image.preview} alt="Preview" className={styles.previewImage} />
+                      <img
+                        src={image.preview}
+                        alt="Preview"
+                        className={styles.previewImage}
+                      />
                       <button
                         type="button"
                         onClick={() => handleImageRemove(image.id)}
@@ -646,7 +726,8 @@ export default function CreateAnimal() {
                 />
 
                 <p className={styles.imageHelp}>
-                  Adicione até 5 fotos do animal. Formatos aceitos: JPG, PNG, WebP (máx. 5MB cada)
+                  Adicione até 5 fotos do animal. Formatos aceitos: JPG, PNG,
+                  WebP (máx. 5MB cada)
                 </p>
               </div>
             </div>

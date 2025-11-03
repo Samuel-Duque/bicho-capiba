@@ -130,7 +130,7 @@ export default function AdoptionModal({
   };
 
 
-  const handleInputChange = (field: keyof FormData, value: any) => {
+  const handleInputChange = (field: keyof FormData, value: string | boolean) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,

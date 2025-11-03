@@ -166,12 +166,12 @@
   color: var(--green-capiba);
 }
 
-
-
 .userDropdown {
   position: relative;
   display: flex;
   align-items: center;
+  border: 1px solid #e8e8e8;
+  border-radius: 50%;
 }
 
 .userImageButton {

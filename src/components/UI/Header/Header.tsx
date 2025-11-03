@@ -24,7 +24,7 @@ const navigationItems = [
 ];
 
 const rightNavigationItems = [
-  { label: "Para ONGs", href: "/ong/cadastro" },
+  { label: "Para ONGs", href: "/ong/sobre" },
   { label: "Entrar", href: "/entrar" },
 ];
 
@@ -82,13 +82,17 @@ export default function Header() {
   }, []);
 
   const displayName =
-    isOng && user && "nome" in user ? user.nome : (user && "fullName" in user ? user.fullName : "");
+    isOng && user && "nome" in user
+      ? user.nome
+      : user && "fullName" in user
+      ? user.fullName
+      : "";
   const userType = isOng ? "ONG" : "Tutor";
 
   const getRightNavItems = () => {
     if (isAuthPage) {
       return [
-        { label: "Para ONGs", href: "/ong/cadastro" },
+        { label: "Para ONGs", href: "/ong/sobre" },
         { label: "Início", href: "/" },
       ];
     }
@@ -99,7 +103,7 @@ export default function Header() {
       if (isOng) {
         items.push({ label: "Dashboard", href: "/ong/dashboard" });
       } else {
-        items.push({ label: "Para ONGs", href: "/ong/cadastro" });
+        items.push({ label: "Para ONGs", href: "/ong/sobre" });
       }
 
       return items;
