@@ -1,12 +1,11 @@
 interface AnimalFormData {
   nome: string;
-  idade: number;
   sexo: string;
-  porte?: string;
+  porte: string;
   cor: string;
   especie: string;
   raca: string;
-  data_nascimento?: string;
+  data_nascimento: string;
   vacinas?: string;
   castrado?: boolean;
   necessidades_especiais?: string;
@@ -16,28 +15,28 @@ interface AnimalFormData {
   images?: File[];
 }
 
-export const validateAnimalForm = (formData: AnimalFormData): Record<string, string> => {
+export const validateAnimalForm = (
+  formData: AnimalFormData
+): Record<string, string> => {
   const errors: Record<string, string> = {};
 
   if (!formData.nome.trim()) {
     errors.nome = "Nome é obrigatório";
   } else if (formData.nome.trim().length < 1) {
     errors.nome = "Nome deve ter pelo menos 1 caractere";
-  } else if (formData.nome.trim().length > 100) {
-    errors.nome = "Nome deve ter no máximo 100 caracteres";
-  }
-
-  if (formData.idade < 0) {
-    errors.idade = "Idade não pode ser negativa";
+  } else if (formData.nome.trim().length > 30) {
+    errors.nome = "Nome deve ter no máximo 30 caracteres";
   }
 
   if (!formData.sexo) {
     errors.sexo = "Sexo é obrigatório";
-  } else if (!['M', 'F'].includes(formData.sexo)) {
+  } else if (!["M", "F"].includes(formData.sexo)) {
     errors.sexo = "Sexo deve ser M (Macho) ou F (Fêmea)";
   }
 
-  if (formData.porte && !['Pequeno', 'Medio', 'Grande'].includes(formData.porte)) {
+  if (!formData.porte) {
+    errors.porte = "Porte é obrigatório";
+  } else if (!["Pequeno", "Medio", "Grande"].includes(formData.porte)) {
     errors.porte = "Porte deve ser Pequeno, Medio ou Grande";
   }
 
@@ -59,20 +58,33 @@ export const validateAnimalForm = (formData: AnimalFormData): Record<string, str
     errors.raca = "Raça deve ter no máximo 50 caracteres";
   }
 
-  if (formData.data_nascimento && formData.data_nascimento.length > 10) {
-    errors.data_nascimento = "Data de nascimento deve ter no máximo 10 caracteres";
+  if (!formData.data_nascimento) {
+    errors.data_nascimento = "Data de nascimento é obrigatória";
+  } else if (formData.data_nascimento.length > 10) {
+    errors.data_nascimento =
+      "Data de nascimento deve ter no máximo 10 caracteres";
+  } else {
+    const birthDate = new Date(formData.data_nascimento);
+    const today = new Date();
+    if (birthDate > today) {
+      errors.data_nascimento = "Data de nascimento não pode ser no futuro";
+    }
   }
 
   if (formData.vacinas && formData.vacinas.length > 200) {
     errors.vacinas = "Vacinas deve ter no máximo 200 caracteres";
   }
 
-  if (formData.necessidades_especiais && formData.necessidades_especiais.length > 200) {
-    errors.necessidades_especiais = "Necessidades especiais deve ter no máximo 200 caracteres";
+  if (
+    formData.necessidades_especiais &&
+    formData.necessidades_especiais.length > 200
+  ) {
+    errors.necessidades_especiais =
+      "Necessidades especiais deve ter no máximo 200 caracteres";
   }
 
-  if (formData.historia && formData.historia.length > 500) {
-    errors.historia = "História deve ter no máximo 500 caracteres";
+  if (formData.historia && formData.historia.length > 1000) {
+    errors.historia = "História deve ter no máximo 1000 caracteres";
   }
 
   return errors;

@@ -1,20 +1,12 @@
-/**
- * Image upload utilities for handling profile pictures and other image uploads
- */
-
 export interface ImageUploadResult {
   preview: string;
   file: File;
 }
-
 export interface ImageUploadError {
   message: string;
   type: "size" | "format" | "upload" | "unknown";
 }
 
-/**
- * Validates image file type
- */
 const ALLOWED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -22,14 +14,8 @@ const ALLOWED_IMAGE_TYPES = [
   "image/webp",
 ];
 
-/**
- * Maximum file size in bytes (5MB)
- */
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
-/**
- * Validates if the file is a valid image
- */
 export const validateImageFile = (
   file: File
 ): { valid: boolean; error?: ImageUploadError } => {
@@ -56,9 +42,6 @@ export const validateImageFile = (
   return { valid: true };
 };
 
-/**
- * Creates a preview URL for an image file
- */
 export const createImagePreview = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -79,16 +62,10 @@ export const createImagePreview = (file: File): Promise<string> => {
   });
 };
 
-/**
- * Converts file to base64 string
- */
 export const fileToBase64 = (file: File): Promise<string> => {
   return createImagePreview(file);
 };
 
-/**
- * Handles image file selection and validation
- */
 export const handleImageSelection = async (
   file: File
 ): Promise<
@@ -121,18 +98,12 @@ export const handleImageSelection = async (
   }
 };
 
-/**
- * Revokes an object URL to free up memory
- */
 export const revokeImagePreview = (preview: string) => {
   if (preview.startsWith("blob:")) {
     URL.revokeObjectURL(preview);
   }
 };
 
-/**
- * Creates FormData for image upload
- */
 export const createImageFormData = (
   file: File,
   fieldName: string = "avatar"
@@ -142,9 +113,6 @@ export const createImageFormData = (
   return formData;
 };
 
-/**
- * Handles multiple image files selection and validation
- */
 export const handleMultipleImageSelection = async (
   files: FileList
 ): Promise<
@@ -184,9 +152,6 @@ export const handleMultipleImageSelection = async (
   };
 };
 
-/**
- * Creates FormData for multiple image upload
- */
 export const createMultipleImageFormData = (
   files: File[],
   fieldName: string = "images"
@@ -196,4 +161,21 @@ export const createMultipleImageFormData = (
     formData.append(fieldName, file);
   });
   return formData;
+};
+
+export const blobToFile = (
+  blob: Blob,
+  fileName: string,
+  mimeType: string = "image/jpeg"
+): File => {
+  return new File([blob], fileName, { type: mimeType });
+};
+
+export const blobToDataURL = (blob: Blob): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
 };

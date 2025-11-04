@@ -42,3 +42,13 @@ export const fetchAnimalById = async (animalId: string) => {
     throw error;
   }
 };
+
+export const fetchAnimalFilters = async () => {
+  try {
+    const response = await api.get("/animals/filters");
+    return response.data.result;
+  } catch (error) {
+    console.error("Error fetching animal filters:", error);
+    throw error;
+  }
+};

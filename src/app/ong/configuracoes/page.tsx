@@ -4,7 +4,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { updateOngProfile } from "@/services/Ong/Ong";
-import { Ong } from "@/services/Auth/Auth";
 import { fetchCepData } from "@/services/Helpers/Helpers";
 import { formatCep } from "@/utils/formatters";
 import { handleImageSelection, revokeImagePreview } from "@/utils/imageUpload";
@@ -24,10 +23,10 @@ import Error from "@/components/UI/Error/Error";
 import styles from "./page.module.css";
 
 export default function DashboardSettings() {
-  const { user, isLoading, setUser } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
-  const [formData, setFormData] = useState({} as Partial<Ong>);
+  const [formData, setFormData] = useState<any>({});
   const [hasChanges, setHasChanges] = useState(false);
   const [justSaved, setJustSaved] = useState(false);
   const [isLoadingCep, setIsLoadingCep] = useState(false);
@@ -44,7 +43,7 @@ export default function DashboardSettings() {
     }
 
     if (user) {
-      setFormData(user as Ong);
+      setFormData(user);
       setApiError("");
     }
   }, [user, isLoading, router]);
@@ -108,7 +107,8 @@ export default function DashboardSettings() {
 
       if (response.status === "OK" && response.result) {
         const { city, neighborhood, street, state } = response.result;
-        setFormData((prev: Partial<Ong>) => ({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setFormData((prev: any) => ({
           ...prev,
           cidade: city || "",
           bairro: neighborhood || "",
@@ -117,10 +117,11 @@ export default function DashboardSettings() {
         }));
         setHasChanges(true);
       }
-    } catch (error) {
-      if ((error as Error)?.name === "AbortError") {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error?.name === "AbortError") {
         setApiError("Tempo limite excedido ao buscar CEP. Tente novamente.");
-      } else if ((error as { response?: { status: number } })?.response?.status === 404) {
+      } else if (error?.response?.status === 404) {
         setApiError("CEP não encontrado. Verifique o código postal informado.");
       } else {
         setApiError(
@@ -143,7 +144,8 @@ export default function DashboardSettings() {
       processedValue = formatPhone(value);
     }
 
-    setFormData((prev: Partial<Ong>) => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setFormData((prev: any) => ({
       ...prev,
       [field]: processedValue,
     }));
@@ -173,7 +175,6 @@ export default function DashboardSettings() {
   };
 
   const validateForm = (): boolean => {
-    // Map formData to match the validator's expected format
     const validationData = {
       name: formData.nome || "",
       cnpj: formData.cnpj || "",
@@ -189,9 +190,9 @@ export default function DashboardSettings() {
       CEP: formData.cep || "",
       quantidadeAnimais: formData.quantidadeAnimais || 0,
       responsavelTecnico: formData.responsavelTecnico || "",
-      password: "", // Not needed for settings
-      confirmPassword: "", // Not needed for settings
-      agreeToTerms: true, // Not needed for settings
+      password: "",
+      confirmPassword: "",
+      agreeToTerms: true,
     };
 
     // Validate all steps
@@ -249,13 +250,12 @@ export default function DashboardSettings() {
       ];
 
       Object.keys(formData).forEach((key) => {
-        const value = (formData as Record<string, any>)[key];
         if (
-          value !== undefined &&
-          value !== null &&
+          formData[key] !== undefined &&
+          formData[key] !== null &&
           !excludeFields.includes(key)
         ) {
-          multipartData.append(key, value);
+          multipartData.append(key, formData[key]);
         }
       });
 
@@ -264,12 +264,13 @@ export default function DashboardSettings() {
       setSelectedFile(null);
       setImagePreview(null);
       setJustSaved(true);
-    } catch (error) {
-      if ((error as { response?: { status: number } })?.response?.status === 400) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error?.response?.status === 400) {
         setApiError("Dados inválidos. Verifique os campos e tente novamente.");
-      } else if ((error as { response?: { status: number } })?.response?.status === 422) {
+      } else if (error?.response?.status === 422) {
         setApiError("Verifique os campos obrigatórios.");
-      } else if ((error as { response?: { status: number } })?.response?.status === 413) {
+      } else if (error?.response?.status === 413) {
         setApiError("Imagem muito grande. O tamanho máximo é 5MB.");
       } else {
         setApiError(
@@ -283,7 +284,7 @@ export default function DashboardSettings() {
 
   const handleReset = () => {
     if (user) {
-      setFormData(user as Ong);
+      setFormData(user);
       setHasChanges(false);
       setApiError("");
       setFieldErrors({});
@@ -376,7 +377,9 @@ export default function DashboardSettings() {
                     placeholder="Nome da sua organização"
                   />
                   {fieldErrors.nome && (
-                    <span className={styles.inputError}>{fieldErrors.nome}</span>
+                    <span className={styles.inputError}>
+                      {fieldErrors.nome}
+                    </span>
                   )}
                 </div>
                 <div className={styles.inputGroup}>
@@ -394,7 +397,9 @@ export default function DashboardSettings() {
                   <input
                     type="text"
                     className={`${styles.input} ${
-                      fieldErrors.responsavelTecnico ? styles.inputWithError : ""
+                      fieldErrors.responsavelTecnico
+                        ? styles.inputWithError
+                        : ""
                     }`}
                     value={formData.responsavelTecnico || ""}
                     onChange={(e) =>

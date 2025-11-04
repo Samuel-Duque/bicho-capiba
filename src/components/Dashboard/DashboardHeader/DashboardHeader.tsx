@@ -19,10 +19,7 @@ export default function DashboardHeader({ ongName }: DashboardHeaderProps) {
           </div>
 
           <div className={styles.actions}>
-            <Link
-              href="/ong/dashboard/animal/novo"
-              className={styles.addButton}
-            >
+            <Link href="/ong/animal/criar" className={styles.addButton}>
               <Plus size={20} />
               Adicionar Animal
             </Link>

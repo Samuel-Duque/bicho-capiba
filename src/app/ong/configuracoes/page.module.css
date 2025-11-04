@@ -63,9 +63,9 @@
 }
 
 .profileImage {
-  border: 3px solid var(--orange-capiba) !important;
-  width: 120px !important;
-  height: 120px !important;
+  border: 3px solid var(--orange-capiba);
+  width: 120px;
+  height: 120px;
 }
 
 .fileInput {
@@ -173,12 +173,12 @@
 }
 
 .inputWithError {
-  border-color: #dc2626 !important;
+  border-color: #dc2626;
 }
 
 .inputWithError:focus {
-  border-color: #dc2626 !important;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
 }
 
 .inputRow {
@@ -229,17 +229,17 @@
 }
 
 .disabledInput {
-  background: #f9fafb !important;
-  color: #6b7280 !important;
-  cursor: not-allowed !important;
-  border-color: #e5e7eb !important;
+  background: #f9fafb;
+  color: #6b7280;
+  cursor: not-allowed;
+  border-color: #e5e7eb;
 }
 
 .input:disabled {
-  background: #f3f4f6 !important;
-  color: #9ca3af !important;
-  cursor: not-allowed !important;
-  border-color: #d1d5db !important;
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+  border-color: #d1d5db;
   opacity: 0.7;
 }
 
@@ -397,8 +397,8 @@
   }
 
   .profileImage {
-    width: 100px !important;
-    height: 100px !important;
+    width: 100px;
+    height: 100px;
   }
 
   .imagePreviewInfo {
