@@ -302,7 +302,7 @@ const CloseAnimalsFeed = () => {
               image={animal.fotos?.[0]?.url || ""}
               sexo={animal.sexo}
               idade={animal.idade}
-              raca={animal.raca}
+              raca={{ id: 0, nome: animal.raca, especieId: 0 }}
               distancia="Próximo"
               bairroOng={animal.ong?.bairro || "Não informado"}
               cidadeOng={animal.ong?.cidade || "Não informado"}

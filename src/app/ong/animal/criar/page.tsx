@@ -259,7 +259,7 @@ export default function CreateAnimal() {
     };
   }, [imagePreviews]);
 
-  const handleInputChange = (field, value) => {
+  const handleInputChange = (field: string, value: string | boolean | File[]) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -343,7 +343,7 @@ export default function CreateAnimal() {
     fileInputRef.current?.click();
   };
 
-  const handleImageChange = async (event) => {
+  const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files) return;
 
@@ -494,7 +494,7 @@ export default function CreateAnimal() {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -523,10 +523,10 @@ export default function CreateAnimal() {
       Object.keys(finalFormData).forEach((key) => {
         if (
           key !== "images" &&
-          finalFormData[key] !== undefined &&
-          finalFormData[key] !== null
+          (finalFormData as Record<string, unknown>)[key] !== undefined &&
+          (finalFormData as Record<string, unknown>)[key] !== null
         ) {
-          const value = finalFormData[key];
+          const value = (finalFormData as Record<string, unknown>)[key];
           if (typeof value === "boolean") {
             multipartData.append(key, value.toString());
           } else if (typeof value === "number") {
@@ -539,8 +539,8 @@ export default function CreateAnimal() {
 
       await createAnimal(multipartData);
       router.push("/ong/dashboard");
-    } catch (error) {
-      const status = error?.response?.status;
+    } catch (error: unknown) {
+      const status = (error as { response?: { status?: number } })?.response?.status;
       if (status === 422) {
         setApiError("Verifique os campos obrigatórios.");
       } else if (status === 413) {

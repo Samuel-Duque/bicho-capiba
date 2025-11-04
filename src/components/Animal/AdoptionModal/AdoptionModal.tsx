@@ -386,7 +386,7 @@ export default function AdoptionModal({
             onChange={(e) =>
               handleInputChange(
                 "quantidadeMoradores",
-                parseInt(e.target.value) || null
+                e.target.value
               )
             }
             min="1"
@@ -433,7 +433,7 @@ export default function AdoptionModal({
                 onChange={(e) =>
                   handleInputChange(
                     "quantidadeAnimais",
-                    parseInt(e.target.value) || null
+                    e.target.value
                   )
                 }
                 min="1"
@@ -524,7 +524,7 @@ export default function AdoptionModal({
                 onChange={(e) =>
                   handleInputChange(
                     "quantidadeCriancas",
-                    parseInt(e.target.value) || null
+                    e.target.value
                   )
                 }
                 min="1"

@@ -26,7 +26,24 @@ export default function DashboardSettings() {
   const { user, isLoading } = useAuth();
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState<{
+    nome?: string | null;
+    cnpj?: string | null;
+    email?: string | null;
+    telefone?: string | null;
+    descricao?: string | null;
+    bairro?: string | null;
+    rua?: string | null;
+    numero?: string | null;
+    cidade?: string | null;
+    estado?: string | null;
+    cep?: string | null;
+    complemento?: string | null;
+    quantidadeAnimais?: number | null;
+    responsavelTecnico?: string | null;
+    images?: Array<{ url: string }>;
+    logo?: File | null;
+  }>({});
   const [hasChanges, setHasChanges] = useState(false);
   const [justSaved, setJustSaved] = useState(false);
   const [isLoadingCep, setIsLoadingCep] = useState(false);
@@ -250,12 +267,13 @@ export default function DashboardSettings() {
       ];
 
       Object.keys(formData).forEach((key) => {
+        const value = (formData as Record<string, unknown>)[key];
         if (
-          formData[key] !== undefined &&
-          formData[key] !== null &&
+          value !== undefined &&
+          value !== null &&
           !excludeFields.includes(key)
         ) {
-          multipartData.append(key, formData[key]);
+          multipartData.append(key, String(value));
         }
       });
 
@@ -330,9 +348,9 @@ export default function DashboardSettings() {
               <div className={styles.profileImageContainer}>
                 <UserImage
                   src={imagePreview || formData.images?.[0]?.url}
-                  alt={formData.nome}
+                  alt={formData.nome || "Usuário"}
                   size="xl"
-                  fallbackText={formData.nome}
+                  fallbackText={formData.nome || "Usuário"}
                   className={styles.profileImage}
                   editable={true}
                   disabled={isSaving}
