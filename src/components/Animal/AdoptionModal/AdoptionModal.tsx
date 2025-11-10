@@ -6,8 +6,10 @@ import { IoClose } from "react-icons/io5";
 import {
   FaQuestionCircle,
   FaArrowRight,
-  FaHeart,
-  FaShieldAlt,
+  FaClock,
+  FaFileAlt,
+  FaCalendarCheck,
+  FaCheck,
 } from "react-icons/fa";
 import { useAuth } from "@/contexts/AuthContext";
 import { formatUrlParam } from "@/utils/formatters";
@@ -129,8 +131,10 @@ export default function AdoptionModal({
     }
   };
 
-
-  const handleInputChange = (field: keyof FormData, value: string | boolean) => {
+  const handleInputChange = (
+    field: keyof FormData,
+    value: string | boolean
+  ) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -217,9 +221,6 @@ export default function AdoptionModal({
 
   const renderSuccessStep = () => (
     <div className={styles.successContent}>
-      <div className={styles.successIcon}>
-        <FaHeart />
-      </div>
       <h2 className={styles.successTitle}>Solicitação Enviada!</h2>
       <div className={styles.successText}>
         <p>
@@ -228,24 +229,64 @@ export default function AdoptionModal({
         </p>
         <p>
           A ONG responsável irá analisar sua solicitação e entrará em contato
-          com você em breve através do email cadastrado.
+          com você através do email cadastrado.
         </p>
         <p>
-          <strong>Próximos passos:</strong>
+          <strong>Acompanhe o status:</strong> Você pode verificar o andamento
+          da sua solicitação a qualquer momento através da página "Status de
+          Adoção" no seu perfil ou por email.
         </p>
-        <ul className={styles.successList}>
-          <li>Aguarde o contato da ONG</li>
-          <li>Prepare a documentação solicitada</li>
-          <li>Agende uma visita se aprovado</li>
-        </ul>
+        <p>
+          <strong>Processo de adoção:</strong>
+        </p>
+        <div className={styles.processContainer}>
+          <div className={styles.processStep}>
+            <div className={`${styles.stepIcon} ${styles.stepCompleted}`}>
+              <FaCheck />
+            </div>
+            <span className={styles.stepText}>Enviar solicitação</span>
+            <div
+              className={`${styles.connectionLine} ${styles.stepConnectorCompleted}`}
+            ></div>
+          </div>
+          <div className={styles.processStep}>
+            <div className={`${styles.stepIcon} ${styles.stepPending}`}>
+              <FaClock />
+            </div>
+            <span className={styles.stepText}>Aguarde contato</span>
+            <div className={styles.connectionLine}></div>
+          </div>
+          <div className={styles.processStep}>
+            <div className={`${styles.stepIcon} ${styles.stepPending}`}>
+              <FaFileAlt />
+            </div>
+            <span className={styles.stepText}>Prepare documentos</span>
+            <div className={styles.connectionLine}></div>
+          </div>
+          <div className={styles.processStep}>
+            <div className={`${styles.stepIcon} ${styles.stepPending}`}>
+              <FaCalendarCheck />
+            </div>
+            <span className={styles.stepText}>Agende visita</span>
+          </div>
+        </div>
       </div>
-      <button
-        type="button"
-        className={styles.successButton}
-        onClick={onClose}
-      >
-        Entendi
-      </button>
+      <div className={styles.successActions}>
+        <button
+          type="button"
+          className={styles.statusButton}
+          onClick={() => router.push("/perfil/status-adocao")}
+        >
+          Ver Status de Adoção
+        </button>
+        <button
+          type="button"
+          className={styles.successButton}
+          onClick={onClose}
+        >
+          Entendi
+        </button>
+      </div>
     </div>
   );
 
@@ -384,10 +425,7 @@ export default function AdoptionModal({
             className={styles.input}
             value={formData.quantidadeMoradores || ""}
             onChange={(e) =>
-              handleInputChange(
-                "quantidadeMoradores",
-                e.target.value
-              )
+              handleInputChange("quantidadeMoradores", e.target.value)
             }
             min="1"
             required
@@ -431,10 +469,7 @@ export default function AdoptionModal({
                 className={styles.input}
                 value={formData.quantidadeAnimais || ""}
                 onChange={(e) =>
-                  handleInputChange(
-                    "quantidadeAnimais",
-                    e.target.value
-                  )
+                  handleInputChange("quantidadeAnimais", e.target.value)
                 }
                 min="1"
                 required
@@ -522,10 +557,7 @@ export default function AdoptionModal({
                 className={styles.input}
                 value={formData.quantidadeCriancas || ""}
                 onChange={(e) =>
-                  handleInputChange(
-                    "quantidadeCriancas",
-                    e.target.value
-                  )
+                  handleInputChange("quantidadeCriancas", e.target.value)
                 }
                 min="1"
                 required

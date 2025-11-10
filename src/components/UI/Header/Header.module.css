@@ -225,18 +225,6 @@
   margin-bottom: 4px;
 }
 
-.userType {
-  display: inline-block;
-  font-family: var(--body-font);
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--green-capiba);
-  background: rgba(63, 125, 88, 0.1);
-  padding: 2px 8px;
-  border-radius: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
 
 .dropdownDivider {
   height: 1px;
@@ -327,18 +315,6 @@
   margin-bottom: 4px;
 }
 
-.mobileUserType {
-  width: fit-content;
-  font-family: var(--body-font);
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--green-capiba);
-  background: rgba(63, 125, 88, 0.1);
-  padding: 2px 8px;
-  border-radius: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
 
 .mobileUserDropdown {
   padding-top: 1rem;

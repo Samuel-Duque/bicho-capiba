@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import AnimalCard from "@/components/UI/AnimalsCard/AnimalCard";
+import { formatAge, getAgeInYears } from "@/utils/formatters";
 import Filter, { FilterOption } from "@/components/UI/Filter/Filter";
 import CloseAnimalsFeedSkeleton from "@/components/UI/Skeletons/CloseAnimalsFeedSkeleton";
 import AnimalCardSkeleton from "@/components/UI/Skeletons/AnimalCardSkeleton";
@@ -73,6 +74,7 @@ const CloseAnimalsFeed = () => {
       nome: string;
       sexo: "M" | "F";
       idade: string;
+      dataNascimento?: string;
       raca: { nome: string };
       especie: string;
       fotos?: Array<{ url: string }>;
@@ -173,10 +175,7 @@ const CloseAnimalsFeed = () => {
   );
 
   const filteredAnimals = animals.filter((animal) => {
-    if (
-      filters.idade &&
-      animal.idade !== filters.idade.replace(" anos", "")
-    )
+    if (filters.idade && animal.idade !== filters.idade.replace(" anos", ""))
       return false;
     if (filters.sexo && animal.sexo !== filters.sexo) return false;
     if (filters.distance) return false;
@@ -298,11 +297,19 @@ const CloseAnimalsFeed = () => {
             <AnimalCard
               key={animal.uuid}
               id={animal.uuid}
-              nome={animal.nome}
-              image={animal.fotos?.[0]?.url || ""}
+              nome={animal.nome || "Nome animal"}
+              image={animal.fotos?.[0]?.url || null}
               sexo={animal.sexo}
-              idade={parseFloat(animal.idade)}
-              raca={{ id: 0, nome: animal.raca.nome, especieId: 0 }}
+              idade={
+                animal.dataNascimento
+                  ? formatAge(animal.dataNascimento)
+                  : `0 anos`
+              }
+              raca={{
+                id: 0,
+                nome: animal.raca?.nome || "Sem raça definida",
+                especieId: 0,
+              }}
               distancia="Próximo"
               bairroOng={animal.ong?.bairro || "Não informado"}
               cidadeOng={animal.ong?.cidade || "Não informado"}

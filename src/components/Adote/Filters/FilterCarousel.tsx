@@ -17,20 +17,14 @@ const filters = [
     imageAlt: "Cachorro",
   },
   {
-    title: "Equinos",
-    imageSrc: "/images/HorseFilter.png",
-    imageAlt: "Cavalo",
+    title: "Coelhos",
+    imageSrc: "/images/RabbitFilter.png",
+    imageAlt: "Coelho",
   },
   {
     title: "Roedores",
     imageSrc: "/images/RatFilter.png",
     imageAlt: "Rato",
-  },
-  {
-    title: "Répteis",
-    imageSrc: "/images/SnakeFilter.png",
-    imageAlt: "Cobra",
-    width: "120px",
   },
 ];
 

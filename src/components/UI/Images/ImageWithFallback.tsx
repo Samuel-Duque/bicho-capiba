@@ -19,7 +19,21 @@ export default function ImageWithFallback({
     setHasError(true);
   };
 
-  if (hasError) {
+  const isValidUrl = (url: any): url is string => {
+    if (!url || typeof url !== 'string' || url.trim() === '') return false;
+    if (url === 'undefined' || url === 'null') return false;
+
+    try {
+      new URL(url);
+      return true;
+    } catch {
+      return url.startsWith('/') || url.startsWith('./') || url.startsWith('../');
+    }
+  };
+
+  const isValidSrc = isValidUrl(props.src);
+
+  if (hasError || !isValidSrc) {
     return (
       <div
         className={className}

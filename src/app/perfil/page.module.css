@@ -1,0 +1,278 @@
+.profile {
+  min-height: 100vh;
+  background-color: var(--background-secondary);
+}
+
+.header {
+  padding: 2rem 0;
+  color: var(--text-color);
+}
+
+.container {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titleSection h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.main {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.section {
+  background: var(--background);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #eee;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.sectionTitleContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sectionIcon {
+  font-size: 1.25rem;
+  color: var(--orange-capiba);
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  color: var(--text-color);
+  margin: 0;
+  font-weight: 600;
+}
+
+.sectionCount {
+  background-color: var(--background-secondary);
+  color: var(--text-color);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.animalsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.adoptionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.donationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.donationCard {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  background: var(--background);
+}
+
+.donationCard:hover {
+  transform: translateY(-2px);
+}
+
+.donationContent {
+  padding: 1.5rem;
+}
+
+.donationOngName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0 0 0.5rem 0;
+}
+
+.donationAmount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--green-capiba);
+  margin: 0 0 1rem 0;
+}
+
+.donationDate {
+  color: var(--text-color);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.donationStatus {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.donationMessage {
+  font-style: italic;
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+.adoptionCard {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  background: var(--background);
+}
+
+.adoptionCard:hover {
+  transform: translateY(-2px);
+}
+
+.adoptionImageContainer {
+  height: 200px;
+  overflow: hidden;
+}
+
+.adoptionImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.adoptionContent {
+  padding: 1.25rem;
+}
+
+.adoptionAnimalName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0 0 0.5rem 0;
+}
+
+.adoptionOngName {
+  color: var(--text-color);
+  font-size: 0.95rem;
+  margin: 0 0 1rem 0;
+}
+
+.adoptionStatus {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.adoptionDates {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.adoptionDates small {
+  color: var(--text-color);
+  font-size: 0.8rem;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-color);
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  color: var(--orange-capiba);
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.emptyState h3 {
+  font-size: 1.25rem;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.emptyState p {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+  .titleSection h1 {
+    font-size: 2rem;
+  }
+
+  .content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .animalsGrid,
+  .adoptionGrid,
+  .donationGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .main {
+    padding: 1rem;
+  }
+
+  .section {
+    padding: 1rem;
+  }
+}
