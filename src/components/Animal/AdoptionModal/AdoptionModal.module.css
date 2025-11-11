@@ -529,14 +529,39 @@
 
 .stepCompleted {
   background: var(--background);
-  color: var(--orange-capiba);
-  border: 2px solid rgba(221, 67, 25, 1);
+  color: var(--yellow-capiba);
+  border: 2px solid var(--yellow-capiba);
+}
+
+.stepCurrent {
+  background: var(--background);
+  color: var(--yellow-capiba);
+  border: 2px solid var(--yellow-capiba);
 }
 
 .stepPending {
   background: var(--background);
-  color: rgba(221, 67, 25, 0.4);
-  border: 2px solid rgba(221, 67, 25, 0.5);
+  color: #ef955185;
+  border: 2px solid #ef955185;
+}
+
+.stepGreen {
+  background: var(--background);
+  color: var(--green-capiba);
+  border: 2px solid var(--green-capiba);
+}
+
+.stepYellow {
+  background: var(--background);
+  color: var(--yellow-capiba);
+  border: 2px solid var(--yellow-capiba);
+  box-shadow: 0 0 0 4px rgba(249, 202, 36, 0.2);
+}
+
+.stepOrange {
+  background: var(--background);
+  color: var(--orange-capiba);
+  border: 2px solid var(--orange-capiba);
 }
 
 .stepText {
@@ -558,7 +583,23 @@
   z-index: 1;
 }
 
+.connectionLineCompleted {
+  background-color: var(--yellow-capiba);
+}
+
 .connectionLine.stepConnectorCompleted {
+  background-color: var(--orange-capiba);
+}
+
+.connectionLine.stepConnectorGreen {
+  background-color: var(--green-capiba);
+}
+
+.connectionLine.stepConnectorYellow {
+  background-color: var(--yellow-capiba);
+}
+
+.connectionLine.stepConnectorOrange {
   background-color: var(--orange-capiba);
 }
 
@@ -587,7 +628,6 @@
 .successButton:hover {
   background: #e5e5e5;
   border-color: #d1d1d1;
-  transform: translateY(-1px);
 }
 
 .statusButton {
@@ -607,8 +647,6 @@
 .statusButton:hover {
   background: #c23813;
   border-color: #c23813;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(221, 67, 25, 0.2);
 }
 
 @media (max-width: 768px) {

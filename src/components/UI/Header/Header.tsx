@@ -81,12 +81,9 @@ export default function Header() {
     };
   }, []);
 
-  const displayName =
-    isOng && user && "nome" in user
-      ? user.nome
-      : user && "fullName" in user
-      ? user.fullName
-      : "";
+  const displayName = user
+    ? (isOng ? user.nome : user.fullName) || ""
+    : "";
 
   const getRightNavItems = () => {
     if (isAuthPage) {
@@ -192,7 +189,7 @@ export default function Header() {
                   </Link>
                 )}
                 <Link
-                  href={isOng ? "/ong/configuracoes" : "/configuracoes"}
+                  href={isOng ? "/ong/configuracoes" : "/perfil/configuracoes"}
                   className={styles.dropdownItem}
                   onClick={() => setIsUserDropdownOpen(false)}
                 >

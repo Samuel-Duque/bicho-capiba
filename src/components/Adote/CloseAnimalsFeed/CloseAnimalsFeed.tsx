@@ -79,11 +79,11 @@ const CloseAnimalsFeed = () => {
       especie: string;
       fotos?: Array<{ url: string }>;
       ong?: { bairro?: string; cidade?: string };
+      isLiked: boolean;
     }>
   >([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [favorites, setFavorites] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMoreData, setHasMoreData] = useState(true);
   const [filters, setFilters] = useState<Filters>({
@@ -145,10 +145,12 @@ const CloseAnimalsFeed = () => {
   }, [currentPage, loadAnimals]);
 
   const handleFavoriteClick = (animalId: string) => {
-    setFavorites((prev) =>
-      prev.includes(animalId)
-        ? prev.filter((id) => id !== animalId)
-        : [...prev, animalId]
+    setAnimals((prev) =>
+      prev.map((animal) =>
+        animal.uuid === animalId
+          ? { ...animal, isLiked: !animal.isLiked }
+          : animal
+      )
     );
   };
 
@@ -313,8 +315,9 @@ const CloseAnimalsFeed = () => {
               distancia="Próximo"
               bairroOng={animal.ong?.bairro || "Não informado"}
               cidadeOng={animal.ong?.cidade || "Não informado"}
-              isFavorite={favorites.includes(animal.uuid)}
+              isFavorite={animal.isLiked}
               onFavoriteClick={handleFavoriteClick}
+              size="compact"
             />
           ))}
           {loadingMore && (

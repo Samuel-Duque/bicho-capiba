@@ -26,6 +26,7 @@ interface AnimalCardProps {
   isFavorite?: boolean;
   onFavoriteClick?: (id: string) => void;
   isPreview?: boolean;
+  size?: "default" | "compact";
 }
 
 export default function AnimalCard({
@@ -42,6 +43,7 @@ export default function AnimalCard({
   isFavorite = false,
   onFavoriteClick,
   isPreview = false,
+  size = "default",
 }: AnimalCardProps) {
   const [isImageHovered, setIsImageHovered] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -64,7 +66,11 @@ export default function AnimalCard({
   };
 
   return (
-    <div className={styles.card}>
+    <div
+      className={`${styles.card} ${
+        size === "compact" ? styles.cardCompact : ""
+      }`}
+    >
       <div
         className={`${styles.imageContainer} ${
           isImageHovered ? styles.imageHovered : ""
@@ -76,7 +82,7 @@ export default function AnimalCard({
             onMouseEnter={() => setIsImageHovered(true)}
             onMouseLeave={() => setIsImageHovered(false)}
           >
-            {imageError || image.includes("placeholder") ? (
+            {imageError || image?.includes("placeholder") ? (
               <ImageWithFallback
                 src="/images/placeholder-animal.jpg"
                 alt={nome}
@@ -86,7 +92,7 @@ export default function AnimalCard({
               />
             ) : (
               <img
-                src={image}
+                src={image || ""}
                 alt={nome}
                 className={styles.image}
                 onError={() => setImageError(true)}
@@ -106,7 +112,7 @@ export default function AnimalCard({
             onMouseLeave={() => setIsImageHovered(false)}
           >
             <ImageWithFallback
-              src={image}
+              src={image || ""}
               alt={nome}
               className={styles.image}
               fill

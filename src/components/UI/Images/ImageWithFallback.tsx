@@ -19,19 +19,27 @@ export default function ImageWithFallback({
     setHasError(true);
   };
 
-  const isValidUrl = (url: any): url is string => {
-    if (!url || typeof url !== 'string' || url.trim() === '') return false;
-    if (url === 'undefined' || url === 'null') return false;
+  const isValidUrl = (url: string | object): url is string => {
+    if (!url || typeof url !== "string" || url.trim() === "") return false;
+    if (url === "undefined" || url === "null") return false;
+
+    const trimmedUrl = url.trimEnd();
 
     try {
-      new URL(url);
+      new URL(trimmedUrl);
       return true;
     } catch {
-      return url.startsWith('/') || url.startsWith('./') || url.startsWith('../');
+      return (
+        trimmedUrl.startsWith("/") ||
+        trimmedUrl.startsWith("./") ||
+        trimmedUrl.startsWith("../")
+      );
     }
   };
 
   const isValidSrc = isValidUrl(props.src);
+  const trimmedSrc =
+    typeof props.src === "string" ? props.src.trimEnd() : props.src;
 
   if (hasError || !isValidSrc) {
     return (
@@ -72,6 +80,12 @@ export default function ImageWithFallback({
   }
 
   return (
-    <Image {...props} alt={alt} className={className} onError={handleError} />
+    <Image
+      {...props}
+      src={trimmedSrc}
+      alt={alt}
+      className={className}
+      onError={handleError}
+    />
   );
 }
