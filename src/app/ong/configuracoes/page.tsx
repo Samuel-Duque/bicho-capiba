@@ -25,7 +25,13 @@ import styles from "./page.module.css";
 
 interface OngFormData extends Partial<AuthUser> {
   images?: Array<{ url: string }>;
-  [key: string]: string | number | boolean | null | undefined | Array<{ url: string }>;
+  [key: string]:
+    | string
+    | number
+    | boolean
+    | null
+    | undefined
+    | Array<{ url: string }>;
 }
 
 export default function DashboardSettings() {
@@ -255,7 +261,11 @@ export default function DashboardSettings() {
           !excludeFields.includes(key)
         ) {
           const value = formData[key];
-          if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+          if (
+            typeof value === "string" ||
+            typeof value === "number" ||
+            typeof value === "boolean"
+          ) {
             multipartData.append(key, String(value));
           }
         }

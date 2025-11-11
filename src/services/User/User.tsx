@@ -154,7 +154,9 @@ export const fetchUserDonations = async (): Promise<UserDonation[]> => {
   }
 };
 
-export const updateUserProfile = async (userData: Record<string, string | number | boolean | null | undefined>) => {
+export const updateUserProfile = async (
+  userData: Record<string, string | number | boolean | null | undefined>
+) => {
   try {
     const response = await api.put("/users", userData);
     return response.data;

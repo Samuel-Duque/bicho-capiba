@@ -21,9 +21,9 @@ export default function TermosPage() {
           <h2>1. Aceitação dos Termos</h2>
           <p>
             Bem-vindo ao Bicho Capiba. Ao acessar e usar nossa plataforma, você
-            concorda em cumprir e estar vinculado a estes Termos de Uso. Se
-            você não concorda com qualquer parte destes termos, não deve usar
-            nossa plataforma.
+            concorda em cumprir e estar vinculado a estes Termos de Uso. Se você
+            não concorda com qualquer parte destes termos, não deve usar nossa
+            plataforma.
           </p>
           <p>
             Estes termos constituem um acordo legal entre você e o Bicho Capiba,
@@ -50,7 +50,7 @@ export default function TermosPage() {
 
         <section className={styles.section}>
           <h2>3. Elegibilidade e Cadastro</h2>
-          
+
           <h3>3.1. Requisitos de Idade</h3>
           <p>
             Você deve ter pelo menos 18 anos de idade para usar esta plataforma.
@@ -61,9 +61,9 @@ export default function TermosPage() {
           <h3>3.2. Informações de Cadastro</h3>
           <p>
             Ao criar uma conta, você concorda em fornecer informações precisas,
-            atuais e completas. Você é responsável por manter a confidencialidade
-            de suas credenciais de acesso e por todas as atividades que ocorrem
-            em sua conta.
+            atuais e completas. Você é responsável por manter a
+            confidencialidade de suas credenciais de acesso e por todas as
+            atividades que ocorrem em sua conta.
           </p>
 
           <h3>3.3. Tipos de Conta</h3>
@@ -88,14 +88,16 @@ export default function TermosPage() {
 
         <section className={styles.section}>
           <h2>4. Uso Aceitável da Plataforma</h2>
-          
+
           <h3>4.1. Conduta Permitida</h3>
           <p>Ao usar a plataforma, você concorda em:</p>
           <ul>
             <li>Usar a plataforma apenas para fins legais e éticos</li>
             <li>Fornecer informações verdadeiras e precisas</li>
             <li>Respeitar outros usuários e ONGs</li>
-            <li>Cumprir todas as leis aplicáveis relacionadas à adoção de animais</li>
+            <li>
+              Cumprir todas as leis aplicáveis relacionadas à adoção de animais
+            </li>
             <li>Manter suas informações de contato atualizadas</li>
           </ul>
 
@@ -117,10 +119,12 @@ export default function TermosPage() {
 
         <section className={styles.section}>
           <h2>5. Responsabilidades dos Usuários</h2>
-          
+
           <h3>5.1. Para Futuros Tutores</h3>
           <ul>
-            <li>Fornecer informações precisas sobre suas condições de moradia</li>
+            <li>
+              Fornecer informações precisas sobre suas condições de moradia
+            </li>
             <li>Avaliar honestamente sua capacidade de cuidar de um animal</li>
             <li>Comunicar-se de forma transparente com as ONGs</li>
             <li>Cumprir com os termos de adoção estabelecidos pela ONG</li>
@@ -131,7 +135,9 @@ export default function TermosPage() {
           <ul>
             <li>Manter informações precisas sobre animais disponíveis</li>
             <li>Fornecer informações completas sobre a saúde dos animais</li>
-            <li>Processar solicitações de adoção de forma justa e transparente</li>
+            <li>
+              Processar solicitações de adoção de forma justa e transparente
+            </li>
             <li>Atualizar o status de animais adotados prontamente</li>
             <li>Manter documentação adequada das adoções</li>
             <li>Cumprir com regulamentações locais sobre proteção animal</li>
@@ -140,7 +146,7 @@ export default function TermosPage() {
 
         <section className={styles.section}>
           <h2>6. Processo de Adoção</h2>
-          
+
           <h3>6.1. Função da Plataforma</h3>
           <p>
             O Bicho Capiba atua apenas como intermediário, facilitando o contato
@@ -158,14 +164,15 @@ export default function TermosPage() {
 
           <h3>6.3. Recusa de Adoção</h3>
           <p>
-            ONGs têm o direito de recusar solicitações de adoção com base em seus
-            critérios de avaliação. A plataforma não interfere nessas decisões.
+            ONGs têm o direito de recusar solicitações de adoção com base em
+            seus critérios de avaliação. A plataforma não interfere nessas
+            decisões.
           </p>
         </section>
 
         <section className={styles.section}>
           <h2>7. Doações</h2>
-          
+
           <h3>7.1. Processamento</h3>
           <p>
             Facilitamos doações para ONGs parceiras através de processadores de
@@ -188,7 +195,7 @@ export default function TermosPage() {
 
         <section className={styles.section}>
           <h2>8. Propriedade Intelectual</h2>
-          
+
           <h3>8.1. Conteúdo da Plataforma</h3>
           <p>
             Todo o conteúdo da plataforma, incluindo textos, gráficos, logos,
@@ -208,17 +215,19 @@ export default function TermosPage() {
           <h3>8.3. Marcas Registradas</h3>
           <p>
             Todas as marcas registradas, marcas de serviço e logotipos usados na
-            plataforma são propriedade do Bicho Capiba ou de terceiros licenciadores.
+            plataforma são propriedade do Bicho Capiba ou de terceiros
+            licenciadores.
           </p>
         </section>
 
         <section className={styles.section}>
           <h2>9. Isenção de Responsabilidade</h2>
-          
+
           <h3>9.1. Disponibilidade do Serviço</h3>
           <p>
-            A plataforma é fornecida &quot;como está&quot; e &quot;conforme disponível&quot;. Não
-            garantimos que o serviço será ininterrupto, seguro ou livre de erros.
+            A plataforma é fornecida &quot;como está&quot; e &quot;conforme
+            disponível&quot;. Não garantimos que o serviço será ininterrupto,
+            seguro ou livre de erros.
           </p>
 
           <h3>9.2. Informações sobre Animais</h3>
@@ -251,9 +260,13 @@ export default function TermosPage() {
           <ul>
             <li>Danos diretos, indiretos, incidentais ou consequenciais</li>
             <li>Perda de lucros, dados ou oportunidades de negócio</li>
-            <li>Danos resultantes de uso ou incapacidade de usar a plataforma</li>
+            <li>
+              Danos resultantes de uso ou incapacidade de usar a plataforma
+            </li>
             <li>Danos causados por ações de terceiros ou outros usuários</li>
-            <li>Problemas decorrentes de adoções realizadas através da plataforma</li>
+            <li>
+              Problemas decorrentes de adoções realizadas através da plataforma
+            </li>
           </ul>
         </section>
 
@@ -275,7 +288,7 @@ export default function TermosPage() {
 
         <section className={styles.section}>
           <h2>12. Suspensão e Encerramento de Conta</h2>
-          
+
           <h3>12.1. Pelo Usuário</h3>
           <p>
             Você pode encerrar sua conta a qualquer momento através das
@@ -283,9 +296,7 @@ export default function TermosPage() {
           </p>
 
           <h3>12.2. Pelo Bicho Capiba</h3>
-          <p>
-            Reservamo-nos o direito de suspender ou encerrar contas que:
-          </p>
+          <p>Reservamo-nos o direito de suspender ou encerrar contas que:</p>
           <ul>
             <li>Violem estes Termos de Uso</li>
             <li>Estejam envolvidas em atividades fraudulentas</li>
@@ -296,8 +307,8 @@ export default function TermosPage() {
           <h3>12.3. Efeitos do Encerramento</h3>
           <p>
             Após o encerramento, você perde o acesso à sua conta e ao conteúdo
-            associado. Algumas informações podem ser retidas conforme exigido por
-            lei ou política de retenção de dados.
+            associado. Algumas informações podem ser retidas conforme exigido
+            por lei ou política de retenção de dados.
           </p>
         </section>
 
@@ -323,14 +334,14 @@ export default function TermosPage() {
           <h2>14. Lei Aplicável e Jurisdição</h2>
           <p>
             Estes Termos de Uso são regidos pelas leis da República Federativa
-            do Brasil. Qualquer disputa relacionada a estes termos será submetida
-            à jurisdição exclusiva dos tribunais brasileiros.
+            do Brasil. Qualquer disputa relacionada a estes termos será
+            submetida à jurisdição exclusiva dos tribunais brasileiros.
           </p>
         </section>
 
         <section className={styles.section}>
           <h2>15. Disposições Gerais</h2>
-          
+
           <h3>15.1. Acordo Completo</h3>
           <p>
             Estes Termos de Uso, juntamente com nossa Política de Privacidade,

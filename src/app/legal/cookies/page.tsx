@@ -20,11 +20,11 @@ export default function CookiesPage() {
         <section className={styles.section}>
           <h2>1. O que são Cookies?</h2>
           <p>
-            Cookies são pequenos arquivos de texto armazenados no seu dispositivo
-            (computador, tablet ou smartphone) quando você visita um site. Eles
-            são amplamente utilizados para fazer os sites funcionarem de forma
-            mais eficiente, além de fornecer informações aos proprietários do
-            site.
+            Cookies são pequenos arquivos de texto armazenados no seu
+            dispositivo (computador, tablet ou smartphone) quando você visita um
+            site. Eles são amplamente utilizados para fazer os sites funcionarem
+            de forma mais eficiente, além de fornecer informações aos
+            proprietários do site.
           </p>
           <p>
             Os cookies permitem que o site reconheça seu dispositivo e armazene
@@ -202,8 +202,8 @@ export default function CookiesPage() {
           <h3>5.4. Fingerprinting</h3>
           <p>
             Técnica que coleta informações sobre a configuração do seu navegador
-            e dispositivo para criar um identificador único, usado principalmente
-            para segurança.
+            e dispositivo para criar um identificador único, usado
+            principalmente para segurança.
           </p>
         </section>
 
@@ -250,9 +250,7 @@ export default function CookiesPage() {
           </ul>
 
           <h3>6.3. Ferramentas de Opt-Out</h3>
-          <p>
-            Você pode desativar cookies de publicidade através de:
-          </p>
+          <p>Você pode desativar cookies de publicidade através de:</p>
           <ul>
             <li>
               <a
@@ -337,12 +335,15 @@ export default function CookiesPage() {
             legais ou regulatórias.
           </p>
           <p>
-            Quando fizermos alterações significativas, notificaremos você através
-            de:
+            Quando fizermos alterações significativas, notificaremos você
+            através de:
           </p>
           <ul>
             <li>Aviso na plataforma</li>
-            <li>Atualização da data &quot;Última atualização&quot; no topo desta página</li>
+            <li>
+              Atualização da data &quot;Última atualização&quot; no topo desta
+              página
+            </li>
             <li>E-mail, quando apropriado</li>
           </ul>
           <p>
@@ -386,9 +387,7 @@ export default function CookiesPage() {
 
         <section className={styles.section}>
           <h2>12. Durações de Cookies</h2>
-          <p>
-            Os cookies que utilizamos têm diferentes durações:
-          </p>
+          <p>Os cookies que utilizamos têm diferentes durações:</p>
 
           <h3>12.1. Cookies de Sessão</h3>
           <p>
@@ -398,8 +397,8 @@ export default function CookiesPage() {
 
           <h3>12.2. Cookies Persistentes</h3>
           <p>
-            Permanecem no seu dispositivo por um período definido (dias, meses ou
-            anos) ou até que você os exclua manualmente. Usados para lembrar
+            Permanecem no seu dispositivo por um período definido (dias, meses
+            ou anos) ou até que você os exclua manualmente. Usados para lembrar
             preferências entre visitas.
           </p>
 
@@ -452,8 +451,8 @@ export default function CookiesPage() {
           <h2>14. Consentimento</h2>
           <p>
             Ao continuar a usar nossa plataforma, você consente com o uso de
-            cookies conforme descrito nesta Política de Cookies. Para cookies não
-            essenciais, solicitaremos seu consentimento explícito através do
+            cookies conforme descrito nesta Política de Cookies. Para cookies
+            não essenciais, solicitaremos seu consentimento explícito através do
             banner de cookies exibido na primeira visita.
           </p>
           <p>
